@@ -1,15 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Infrastructure.DependencyResolver
 {
     public class DependencyResolverService
     {
-        public static void REGISTERINFRASTRUCTURELAYER(IServiceCollection services_)
+        public static void RegisterInfrastructureLayer(IServiceCollection services_)
         {
             services_.AddScoped<IBeatRepository, BeatRepository>();
             services_.AddScoped<IUserRepository, UserRepository>();
