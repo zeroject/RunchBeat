@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IDbRepository
+    public interface IDbRepository
     {
+        public void RecreateDb();
     }
 }

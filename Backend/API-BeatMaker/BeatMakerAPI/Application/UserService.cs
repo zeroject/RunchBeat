@@ -1,6 +1,8 @@
-﻿namespace Application
+﻿using Application.Interfaces;
+
+namespace Application
 {
-    public class Class1
+    public class UserService : IUserService
     {
 
     }
