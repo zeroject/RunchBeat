@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatMakerAPI", "BeatMakerAPI\BeatMakerAPI.csproj", "{1DD8CBAD-2D71-4C5C-AF5E-6DC105AF17CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeatMakerAPI", "BeatMakerAPI\BeatMakerAPI.csproj", "{1DD8CBAD-2D71-4C5C-AF5E-6DC105AF17CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{00D572E7-315D-4823-8436-9AB45831E2A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{2CE597D0-CEF7-427F-BA64-FF15BE2D09F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{DFE9013D-E2AE-41ED-A92E-5231A3041A69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{1DD8CBAD-2D71-4C5C-AF5E-6DC105AF17CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DD8CBAD-2D71-4C5C-AF5E-6DC105AF17CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DD8CBAD-2D71-4C5C-AF5E-6DC105AF17CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00D572E7-315D-4823-8436-9AB45831E2A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00D572E7-315D-4823-8436-9AB45831E2A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00D572E7-315D-4823-8436-9AB45831E2A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00D572E7-315D-4823-8436-9AB45831E2A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE597D0-CEF7-427F-BA64-FF15BE2D09F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE597D0-CEF7-427F-BA64-FF15BE2D09F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE597D0-CEF7-427F-BA64-FF15BE2D09F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE597D0-CEF7-427F-BA64-FF15BE2D09F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFE9013D-E2AE-41ED-A92E-5231A3041A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFE9013D-E2AE-41ED-A92E-5231A3041A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFE9013D-E2AE-41ED-A92E-5231A3041A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFE9013D-E2AE-41ED-A92E-5231A3041A69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
