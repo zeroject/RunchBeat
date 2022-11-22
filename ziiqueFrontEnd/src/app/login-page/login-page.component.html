@@ -1,1 +1,15 @@
-<h1>login</h1>
+<h1 xmlns="http://www.w3.org/1999/html">login</h1>
+<body>
+<mat-form-field>
+  User Name
+  <input matInput [(ngModel)]="username">
+  Password
+  <input type ="password" matInput [(ngModel)]="password">
+  <mat-action-row>
+    <button mat-raised-button (click)="Submit()">Login</button>
+  </mat-action-row>
+  <nav>
+    <a class = "mat-raised-button" routerLink="/NewUserPageComponent">Dont have an account?</a>
+  </nav>
+</mat-form-field>
+</body>
