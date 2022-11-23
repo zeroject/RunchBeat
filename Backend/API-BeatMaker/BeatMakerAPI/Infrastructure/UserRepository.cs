@@ -30,9 +30,14 @@ namespace Infrastructure
             }
         }
 
-        public void DeleteUser(int userId_)
+        public void DeleteUser(string email_)
         {
-            throw new NotImplementedException();
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            {
+                User userToDelete = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault();
+                context._userEntries.Remove(userToDelete);
+                context.SaveChanges();
+            }
         }
 
         public User GetUser(string username_, string password_)

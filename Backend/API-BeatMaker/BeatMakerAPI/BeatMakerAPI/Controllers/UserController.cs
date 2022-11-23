@@ -39,6 +39,10 @@ namespace BeatMakerAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
+            catch (ArgumentException e)
+            {
+                return StatusCode(233, e.Message);
+            }
             catch (Exception e)
             {
                 return StatusCode(500, e.ToString());
@@ -66,9 +70,9 @@ namespace BeatMakerAPI.Controllers
         
         [HttpDelete]
         [Route("deleteUser")]
-        public void DeleteUser(int userId_)
+        public void DeleteUser(string email_)
         {
-            _userService.DeleteUser(userId_);
+            _userService.DeleteUser(email_);
         }
     }
 }

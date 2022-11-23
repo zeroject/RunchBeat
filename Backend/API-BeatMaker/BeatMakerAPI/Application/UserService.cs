@@ -45,9 +45,9 @@ namespace Application
             return _userRepo.UpdateUser(_mapper.Map<User>(userDTO_));
         }
 
-        public void DeleteUser(int userId_)
+        public void DeleteUser(string email_)
         {
-            _userRepo.DeleteUser(userId_);
+            _userRepo.DeleteUser(email_);
         }
     }
 }

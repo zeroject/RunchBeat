@@ -8,51 +8,52 @@ namespace APITests
 {
     public class UserTests
     {
-        User testUser = new User(0, "DaBeaa", "gal123", "adof@gg.org", false);
-        public static List<User> GetData()
+        User testUser = new User() { Id=0, Username="DaBeaa", Password="gal123", Email="adof@gg.org", Is2FA=false };
+        public static User[] GetData()
         {
-            var allData = new List<User>
+            var allData = new User[]
             {
-                new User(1, "hans", "peter123", "email@gg.org", true),
-                new User(-1, "hans", "peter123", "email@gg.org", true),
-                new User(1, null, "peter123", "email@gg.org", true),
-                new User(1, "hans", null, "email@gg.org", true),
-                new User(1, "hans", "peter123", null, true),
-                new User(1, "hans", "peter123", "email@gg.org", false),
-                new User(1, "", "peter123", "email@gg.org", true),
-                new User(1, "hans", "", "email@gg.org", true),
-                new User(1, "hans", "peter123", "", true)
+                new User(){ Id=0, Username="", Password="gal12345", Email="adof@gg.org", Is2FA=true },
+                new User(){ Id=1, Username="DaBeaa", Password="", Email="adof@gg.org", Is2FA=false },
+                new User(){ Id=2, Username="DaBeaa", Password="gal12345", Email="", Is2FA=true },
+                new User(){ Id=3, Username=null, Password="gal12345", Email="adof@gg.org", Is2FA=false },
+                new User(){ Id=4, Username="DaBeaa", Password=null, Email="adof@gg.org", Is2FA=false },
+                new User(){ Id=5, Username="DaBeaa", Password="gal12345", Email=null, Is2FA=false },
+                new User(){ Id=5, Username="DaBeaa", Password="gal123", Email="adof@gg.org", Is2FA=false },
+                new User(){ Id=-1, Username="DaBeaa", Password="gal12323", Email="adof@gg.org", Is2FA=false },
             };
             return allData;
         }
 
-        Mock<IRepository<int, User>> userRepoMock = new Mock<IRepository<int, User>>();
+        Mock<IUserRepository> mockUserRepository = new Mock<IUserRepository>();
 
-        [Theory]
-        [MemberData(nameof(GetData), typeof(ArgumentException))]
-        public void TestIfUserIsValid(User user_, Type expected)
+        
+        [Fact]
+        public void TestIfUserIsValid()
         {
             // Arange
-            IUserService userService;
-            userService = new UserService();
+            mockUserRepository.Setup(r => r.GetAll()).Returns(GetData);
+            IUserService user = new UserService(mockUserRepository);
+            IUserRepository userRepo;
+            userRepo = new UserRepository();
             // Act & Assert
             try
             {
-                userService.CreateNewUser(user_); 
-            } catch(ArgumentException e) 
+                userRepo.CreateNewUser(); 
+            } catch(Exception e) 
             {
-                Assert.Equal(expected, e.GetType());
+                Assert.Equal(typeof(ArgumentException), e.GetType());
             };
         }
         [Fact]
         public void TestIfUserWasCreated()
         {
             // Arange
-            IUserService userService;
-            userService = new UserService();
+            IUserRepository userRepo = new UserRepository();
+
             // Act
-            userService.CreateNewUser(testUser);
-            User comebackUser = userService.GetUser("DaBeaa", "gal123");
+            userRepo.CreateNewUser(testUser);
+            User comebackUser = userRepo.GetUser("DaBeaa", "gal123");
             // Assert
             Assert.Equal(testUser.Email, comebackUser.Email);
         }
@@ -60,12 +61,13 @@ namespace APITests
         public void TestIfUserWasDeletedFromDatabase()
         {
             // Arange
-            IUserService userService = new UserService();
+            IUserRepository userRepo;
+            userRepo = new UserRepository();
             // Act
             try
             {
-                userService.DeleteUser(testUser.Id);
-                User comebackUser = userService.GetUser("DaBeaa", "gal123");
+                userRepo.DeleteUser(testUser.Email);
+                User comebackUser = userRepo.GetUser("DaBeaa", "gal123");
             } catch(Exception e)
             {
                 Assert.Equal(typeof(Exception), e.GetType());
