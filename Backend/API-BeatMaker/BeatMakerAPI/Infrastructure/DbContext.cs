@@ -32,7 +32,7 @@ namespace Infrastructure
         }
 
         //Mapping to entity classes
-        public DbSet<Beat> BeatEntries { get; set; }
+        public DbSet<Beat> _beatEntries { get; set; }
         public DbSet<User> _userEntries { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Infrastructure
 
         public User CreateNewUser(User user_)
         {
-            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            using (var context = new DbContext(_options, ServiceLifetime.Transient))
             {
                 if (CheckIfUserExists(user_.Email))
                 {
@@ -67,7 +67,7 @@ namespace Infrastructure
 
         private bool CheckIfUserExists(string email_)
         {
-            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            using (var context = new DbContext(_options, ServiceLifetime.Transient))
             {
                 User user = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault();
                 if (user != null)
