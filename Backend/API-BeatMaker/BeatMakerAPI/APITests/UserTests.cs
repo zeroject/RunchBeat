@@ -26,6 +26,8 @@ namespace APITests
             return allData;
         }
 
+        Mock<IRepository<int, User>> userRepoMock = new Mock<IRepository<int, User>>();
+
         [Theory]
         [MemberData(nameof(GetData), typeof(ArgumentException))]
         public void TestIfUserIsValid(User user_, Type expected)

@@ -27,7 +27,8 @@ namespace Infrastructure
             modelBuilder.Entity<Beat>()
                 .HasOne<User>()
                 .WithMany()
-                .HasForeignKey(w => w.UserId);
+                .HasForeignKey(w => w.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         //Mapping to entity classes
