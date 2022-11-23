@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-user-page',
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-user-page.component.css']
 })
 export class NewUserPageComponent implements OnInit {
+  username: any;
+  email: any;
+  password: any;
+  cpassword: any;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  submit() {
+
+  }
+
+  cancel() {
+    this.router.navigate(['./Login']);
+  }
 }
