@@ -24,6 +24,7 @@ export class LoginPageComponent implements OnInit {
 
     }
     var token = await this.http.login(dto)
+    // @ts-ignore
     localStorage.setItem('token', token)
   }
 }

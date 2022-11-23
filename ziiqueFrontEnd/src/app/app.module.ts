@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'Login', component: LoginPageComponent },
   { path: 'NewUser', component: NewUserPageComponent },
   { path: 'BeatMaker', component: BeatMakerPageComponent, canActivate: [AuthguardService]},
-  { path: '', redirectTo:'/LoginPage', pathMatch: "full"}
+  { path: '', redirectTo:'/Login', pathMatch: "full"}
 ];
 
 @NgModule({
