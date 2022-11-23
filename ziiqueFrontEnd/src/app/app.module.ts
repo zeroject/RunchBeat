@@ -17,10 +17,10 @@ import {RouterModule, RouterOutlet, Routes} from "@angular/router";
 import {AuthguardService} from "../services/authguard.service";
 
 const routes: Routes = [
-  { path: 'ProfilePage', component: ProfilePageComponent, canActivate: [AuthguardService] },
-  { path: 'LoginPage', component: LoginPageComponent },
-  { path: 'NewUserPage', component: NewUserPageComponent },
-  { path: 'BeatMakerPage', component: BeatMakerPageComponent, canActivate: [AuthguardService]},
+  { path: 'Profile', component: ProfilePageComponent, canActivate: [AuthguardService] },
+  { path: 'Login', component: LoginPageComponent },
+  { path: 'NewUser', component: NewUserPageComponent },
+  { path: 'BeatMaker', component: BeatMakerPageComponent, canActivate: [AuthguardService]},
   { path: '', redirectTo:'/LoginPage', pathMatch: "full"}
 ];
 
