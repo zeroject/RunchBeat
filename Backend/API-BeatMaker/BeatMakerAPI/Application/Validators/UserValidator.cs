@@ -1,8 +1,13 @@
-﻿
+﻿using Application.DTOs;
+using FluentValidation;
 
 namespace Application.Validators
 {
-    internal class UserValidator
+    public class UserValidator : AbstractValidator<UserDTO>
     {
+        public UserValidator()
+        {
+
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace Infrastructure
 {
     public class UserRepository : IUserRepository
     {
-        public void CreateNewUser(User user_)
+        public User CreateNewUser(User user_)
         {
             throw new NotImplementedException();
         }
