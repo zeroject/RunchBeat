@@ -20,12 +20,14 @@ namespace BeatMakerAPI.Controllers
         }
 
         [HttpGet]
+        [Route("getUser")]
         public ActionResult<User> GetUser(string username_, string password_)
         {
             return _userService.GetUser(username_, password_);
         }
 
         [HttpPost]
+        [Route("createUser")]
         public ActionResult<User> CreateNewUser(UserDTO userDTO_)
         {
             try
@@ -44,6 +46,7 @@ namespace BeatMakerAPI.Controllers
         }
 
         [HttpPut]
+        [Route("updateUser")]
         public ActionResult<User> UpdateUser(UserDTO userDTO_)
         {
             try
@@ -62,6 +65,7 @@ namespace BeatMakerAPI.Controllers
         }
         
         [HttpDelete]
+        [Route("deleteUser")]
         public void DeleteUser(int userId_)
         {
             _userService.DeleteUser(userId_);

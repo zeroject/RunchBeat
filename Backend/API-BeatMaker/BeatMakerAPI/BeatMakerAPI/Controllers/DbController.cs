@@ -14,6 +14,7 @@ namespace BeatMakerAPI.Controllers
         }
 
         [HttpPost]
+        [Route("recreateDB")]
         public void RecreateDB()
         {
             _dbService.RecreateDb();

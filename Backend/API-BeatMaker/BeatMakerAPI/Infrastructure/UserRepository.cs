@@ -7,19 +7,19 @@ namespace Infrastructure
 {
     public class UserRepository : IUserRepository
     {
-        private DbContextOptions<DbContext> _dbContextOptions;
+        private DbContextOptions<DbContext> _options;
         public UserRepository()
         {
-            _dbContextOptions = new DbContextOptions<DbContext>();
+            _options = new DbContextOptionsBuilder<DbContext>().UseSqlite("Data Source = db.db").Options;
         }
 
         public User CreateNewUser(User user_)
         {
-            using (var context = new DbContext(_dbContextOptions, ServiceLifetime.Scoped))
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
                 if (CheckIfUserExists(user_.Email))
                 {
-                    throw new ArgumentException("User Allready exists");
+                    throw new ArgumentException("User Already exists");
                 }
                 else
                 {
@@ -37,15 +37,15 @@ namespace Infrastructure
 
         public User GetUser(string username_, string password_)
         {
-            using (var context = new DbContext(_dbContextOptions, ServiceLifetime.Scoped))
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                return context._userEntries.Find(username_) ?? throw new KeyNotFoundException("Could not find User");
+                return (context._userEntries.Where(x => x.Username == username_).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User"));
             }
         }
 
         public User UpdateUser(User user_)
         {
-            using (var context = new DbContext(_dbContextOptions, ServiceLifetime.Scoped))
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
                 if (CheckIfUserExists(user_.Email))
                 {
@@ -60,11 +60,11 @@ namespace Infrastructure
             }
         }
 
-        private bool CheckIfUserExists(string eMail)
+        private bool CheckIfUserExists(string email_)
         {
-            using (var context = new DbContext(_dbContextOptions, ServiceLifetime.Scoped))
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                User user = context._userEntries.Find(eMail) ?? throw new KeyNotFoundException("Could not find User");
+                User user = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault();
                 if (user != null)
                 {
                     return true;
