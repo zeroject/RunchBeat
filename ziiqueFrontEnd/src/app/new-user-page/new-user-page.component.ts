@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import * as EmailValidator from 'email-validator';
-
+import { HttpService } from "../../services/http.service";
 
 
 @Component({
@@ -23,7 +23,7 @@ export class NewUserPageComponent implements OnInit {
   }
 
 
-  constructor(private router: Router, private snackbar: MatSnackBar)
+  constructor(private router: Router, private snackbar: MatSnackBar, private http: HttpService)
   {
   }
 
@@ -35,23 +35,34 @@ export class NewUserPageComponent implements OnInit {
     this.snackbar.open(message, action, {duration: 4000})
   }
 
-  submit() {
+  async submit() {
     if(this.strengthvalue >= 2){
       if(this.password == this.cpassword){
         if(EmailValidator.validate(this.email)){
-          this.snackbar.open("your credentials is good", "ok")
+          let dto = {
+            username: this.username,
+            email: this.email,
+            password: this.password,
+            is2FA: false
+          }
+          if(await this.http.createUser(dto) != "200"){
+            this.snackbar.open("Username or Email is already taken", "Ok")
+          }
+          else {
+            this.snackbar.open("Your credentials is good", "Ok")
+            await this.router.navigate(['./Beatmaker'])
+          }
         }
-
         else {
-          this.snackbar.open("Your email is not valid", "ok")
+          this.snackbar.open("Your email is not valid", "Ok")
         }
       }
       else {
-        this.snackbar.open("your passwords dont match", "ok")
+        this.snackbar.open("Your passwords dont match", "Ok")
       }
     }
     else {
-      this.snackbar.open("your passwords is not strong enough", "ok")
+      this.snackbar.open("Your passwords is not strong enough", "Ok")
     }
 
   }

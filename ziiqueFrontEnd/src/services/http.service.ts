@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 
 export const customAxios = axios.create(
   {
-    baseURL: 'https:/localhost:7003',
+    baseURL: 'https:/localhost:7003/api',
     headers: {
       Authorization: `bearer ${localStorage.getItem('token')}`
     }
@@ -43,5 +43,9 @@ async login(dto: any)
 
 }
 
+async createUser(Dto: {username: any, password: any, email: any, is2FA: any}){
+    const httpResult = await customAxios.put("createUser", Dto)
+    return httpResult.status.toString()
+}
 
 }
