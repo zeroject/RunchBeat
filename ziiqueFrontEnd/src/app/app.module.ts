@@ -16,7 +16,7 @@ import {MatCardModule} from "@angular/material/card";
 import {RouterModule, RouterOutlet, Routes} from "@angular/router";
 import {AuthguardService} from "../services/authguard.service";
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar'
 
 
 const routes: Routes = [
@@ -46,7 +46,8 @@ const routes: Routes = [
     MatButtonModule,
     RouterOutlet,
     MatCardModule,
-    PasswordStrengthMeterModule.forRoot()
+    PasswordStrengthMeterModule.forRoot(),
+    MatSnackBarModule
   ],
   providers: [
 
