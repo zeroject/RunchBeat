@@ -9,5 +9,6 @@ namespace Application.Interfaces
         public Beat CreateNewBeat(BeatDTO beat_);
         public Beat UpdateBeat(BeatDTO beat_);
         public void DeleteBeat(int id_);
+        public bool IsBeatStringValid(string beatstring_);
     }
 }
