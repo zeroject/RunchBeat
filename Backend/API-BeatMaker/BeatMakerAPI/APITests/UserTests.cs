@@ -43,7 +43,7 @@ namespace APITests
         [Theory]
         [InlineData(1, "Casper", "gal12345", "adof@gg.org", true)]
         [InlineData(2, "Anders", "MegetSikkertKodeord", "anders@zomf.org", false)]
-        [InlineData(3, "Magus", "jegelskerbannaner1234", "casp@zomr.org", true)]
+        [InlineData(3, "Magnus", "jegelskerbannaner1234", "casp@zomr.org", true)]
         public void TestIfUserWasCreated(int userId_, string username_, string password_, string email_, bool is2FA_)
         {
             // Arrange
