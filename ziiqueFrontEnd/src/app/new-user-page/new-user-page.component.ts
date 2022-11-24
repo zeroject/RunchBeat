@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import { PasswordStrengthMeterService } from 'angular-password-strength-meter';
+
 
 @Component({
   selector: 'app-new-user-page',
@@ -11,13 +13,20 @@ export class NewUserPageComponent implements OnInit {
   email: any;
   password: any;
   cpassword: any;
+  strength: any;
 
-  constructor(private router: Router) { }
+
+  constructor(private router: Router)
+  {
+  }
 
   ngOnInit(): void {
   }
 
   submit() {
+    console.log(this.password)
+    console.log(this.cpassword)
+    console.log(this.strength)
 
   }
 
