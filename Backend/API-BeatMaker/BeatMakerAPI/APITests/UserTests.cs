@@ -12,16 +12,6 @@ namespace APITests
 {
     public class UserTests
     {
-        public static List<User> GetData()
-        {
-            var allData = new List<User>
-            {
-                new User(){Id = 1, Username="Casper", Password="gal12345", Email="adof@gg.org", Is2FA=true },
-                new User(){Id = 1, Username="Anders", Password="numseerstor123", Email="adoddd@gg.org", Is2FA=false },
-                new User(){Id = 1, Username="Kasper", Password="gal123456", Email="heløjsovs@gg.org", Is2FA=true }
-            };
-            return allData;
-        }
 
         private UserService userService;
         private Mock<IUserRepository> userRepo = new Mock<IUserRepository>();
@@ -50,44 +40,21 @@ namespace APITests
                 Assert.Equal(typeof(ValidationException), e.GetType());
             };
         }
-        /*
         [Theory]
         [InlineData(1, "Casper", "gal12345", "adof@gg.org", true)]
+        [InlineData(2, "Anders", "MegetSikkertKodeord", "anders@zomf.org", false)]
+        [InlineData(3, "Magus", "jegelskerbannaner1234", "casp@zomr.org", true)]
         public void TestIfUserWasCreated(int userId_, string username_, string password_, string email_, bool is2FA_)
         {
             // Arrange
             User user = new User() { Id = userId_, Username = username_, Password = password_, Email = email_, Is2FA = is2FA_};
-            userRepo.Setup(x => x.CreateNewUser(user)).Returns(user);
+            userRepo.Setup(x => x.GetUser(username_, password_)).Returns(user);
 
             // Act
-            User userTest = userService.GetUser(user.Username, user.Password);
+            User userTest = userService.GetUser(username_, password_);
 
             // Assert
             Assert.Equal(email_, userTest.Email);
         }
-        [Fact]
-        public void TestIfUserWasDeletedFromDatabase()
-        {
-            // Arange
-            IValidator<UserDTO> validator = new UserValidator();
-            var mapper = new MapperConfiguration(config =>
-            {
-                config.CreateMap<UserDTO, User>();
-            }).CreateMapper();
-            IUserRepository userRepository = new UserRepository();
-            IUserService userRepo;
-            userRepo = new UserService(userRepository, mapper, validator);
-            // Act
-            try
-            {
-                userRepo.DeleteUser("me");
-                User comebackUser = userRepo.GetUser("DaBeaa", "gal123");
-            } catch(Exception e)
-            {
-                Assert.Equal(typeof(Exception), e.GetType());
-            }
-        
-        }
-        */
     }
 }
