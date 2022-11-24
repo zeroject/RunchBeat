@@ -1,6 +1,7 @@
 ﻿
 
 using Application;
+using Application.DTOs;
 using Application.Interfaces;
 
 namespace APITests
@@ -30,6 +31,19 @@ namespace APITests
 
             //Assert
             Assert.Equal(expected_, actualValue);
+        }
+
+        [Theory]
+        [InlineData(1, typeof(ArgumentException))]
+        [InlineData(-1, typeof(ArgumentException))]
+        [InlineData(null, typeof(ArgumentException))]
+        public void TestIfUserIDisStillValid(int userID_, Type expected_)
+        {
+            //Arange
+            IBeatService beatService = new BeatService();
+            BeatDTO beatDTO = new BeatDTO() { BeatString="D5;E3;A7", Name="Test", Summary="this is a test", UserId=userID_};
+            //Act & Assert
+            Assert.Throws<ArgumentException>(() => beatService.CreateNewBeat(beatDTO));
         }
 
     }
