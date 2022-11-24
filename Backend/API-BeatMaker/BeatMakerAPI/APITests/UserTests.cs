@@ -40,13 +40,8 @@ namespace APITests
         {
             // Arange
             UserDTO userDTO = new UserDTO()
-            {
-                Email = "test",
-                Username = "test",
-                Password = "test",
-                Is2FA = true
-            };
-            // Arange & Act & Assert
+            { Email = "test", Username = "test", Password = "test", Is2FA = true };
+            // Act & Assert
             try
             {
                 userService.CreateNewUser(userDTO); 
@@ -55,17 +50,20 @@ namespace APITests
                 Assert.Equal(typeof(ValidationException), e.GetType());
             };
         }
+        /*
         [Theory]
-        [MemberData(nameof(GetData))]
-        public void TestIfUserWasCreated()
+        [InlineData(1, "Casper", "gal12345", "adof@gg.org", true)]
+        public void TestIfUserWasCreated(int userId_, string username_, string password_, string email_, bool is2FA_)
         {
-            // Arange
-            userRepo.Setup(x=>x.GetUser(user.Username, user.Password)).Returns(user);
+            // Arrange
+            User user = new User() { Id = userId_, Username = username_, Password = password_, Email = email_, Is2FA = is2FA_};
+            userRepo.Setup(x => x.CreateNewUser(user)).Returns(user);
 
             // Act
-            User userTest = userService.GetUser("casp", "password123456");
+            User userTest = userService.GetUser(user.Username, user.Password);
+
             // Assert
-            Assert.Equal(user.Email, userTest.Email);
+            Assert.Equal(email_, userTest.Email);
         }
         [Fact]
         public void TestIfUserWasDeletedFromDatabase()
@@ -88,6 +86,8 @@ namespace APITests
             {
                 Assert.Equal(typeof(Exception), e.GetType());
             }
+        
         }
+        */
     }
 }
