@@ -17,6 +17,7 @@ export class NewUserPageComponent implements OnInit {
   cpassword: any;
   strengthvalue: any;
   isEmailTrue: any;
+  HttpStatus: any;
 
   strength(event: any) {
     this.strengthvalue = event
@@ -45,12 +46,12 @@ export class NewUserPageComponent implements OnInit {
             password: this.password,
             is2FA: false
           }
-          if(await this.http.createUser(dto) != "200"){
-            this.snackbar.open("Username or Email is already taken", "Ok")
+          this.HttpStatus = this.http.createUser(dto)
+          if(this.HttpStatus == "201"){
+            await this.router.navigate(['./BeatMaker'])
           }
           else {
-            this.snackbar.open("Your credentials is good", "Ok")
-            await this.router.navigate(['./Beatmaker'])
+            this.snackbar.open("Username or Email is already taken", "Ok")
           }
         }
         else {

@@ -44,7 +44,8 @@ async login(dto: any)
 }
 
 async createUser(Dto: {username: any, password: any, email: any, is2FA: any}){
-    const httpResult = await customAxios.put("createUser", Dto)
+    const httpResult = await customAxios.post("User/createUser", Dto)
+  console.log(httpResult)
     return httpResult.status.toString()
 }
 
