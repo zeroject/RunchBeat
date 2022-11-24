@@ -21,6 +21,7 @@ export class NewUserPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   submit() {

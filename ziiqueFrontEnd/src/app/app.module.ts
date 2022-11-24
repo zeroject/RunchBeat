@@ -18,6 +18,7 @@ import {AuthguardService} from "../services/authguard.service";
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 
 
+
 const routes: Routes = [
   { path: 'Profile', component: ProfilePageComponent, canActivate: [AuthguardService] },
   { path: 'Login', component: LoginPageComponent },

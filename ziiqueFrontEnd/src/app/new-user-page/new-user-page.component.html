@@ -12,8 +12,8 @@
     <input matInput placeholder="Email" [ngModel]="email">
   </mat-form-field>
   <mat-form-field>
-    <input matInput placeholder="password" type="password" [ngModel]="password">
-    <password-strength-meter [password]="password" (strengthChange)="strength" [numberOfProgressBarItems]="5"></password-strength-meter>
+    <input matInput placeholder="password" type="password" [(ngModel)]="password">
+    <password-strength-meter [password]="password"></password-strength-meter>
   </mat-form-field>
   <mat-form-field>
     <input matInput placeholder="confirm password" type="Password" [ngModel]="cpassword">
