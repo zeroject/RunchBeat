@@ -9,7 +9,7 @@ namespace Infrastructure
         private DbContextOptions<DbContext> _options;
         public DbRepository()
         {
-            _options = new DbContextOptionsBuilder<DbContext>().UseSqlite("").Options;
+            _options = new DbContextOptionsBuilder<DbContext>().UseSqlite("Data Source = db.db").Options;
         }
 
         public void RecreateDb()

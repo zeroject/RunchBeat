@@ -1,3 +1,8 @@
+using Application.DTOs;
+using AutoMapper;
+using Domain;
+using FluentValidation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+
+var mapper = new MapperConfiguration(config =>
+{
+    config.CreateMap<UserDTO, User>();
+}).CreateMapper();
+
+builder.Services.AddSingleton(mapper);
+
+Infrastructure.DependencyResolver.DependencyResolverService.RegisterInfrastructureLayer(builder.Services);
+Application.DependencyResolver.DependencyResolverService.RegisterApplicationLayer(builder.Services);
+
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -14,6 +33,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(options =>
+    {
+        options.AllowAnyOrigin();
+        options.AllowAnyHeader();
+        options.AllowAnyMethod();
+    });
 }
 
 app.UseHttpsRedirection();
