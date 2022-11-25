@@ -49,5 +49,10 @@ namespace Application
         {
             _userRepo.DeleteUser(email_);
         }
+
+        public User GetUserByEmail(string email_)
+        {
+            return _userRepo.GetUserByEmail(email_);
+        }
     }
 }
