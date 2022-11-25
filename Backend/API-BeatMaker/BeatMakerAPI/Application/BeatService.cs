@@ -1,19 +1,43 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
+using FluentValidation;
 
 namespace Application
 {
     public class BeatService : IBeatService
     {
-        public List<Beat> GetAllBeatsFromUser(int userId_)
+        private IBeatRepository _beatRepo;
+        private IMapper _mapper;
+        private IValidator<BeatDTO> _validator;
+
+        public BeatService(IBeatRepository repo, IMapper mapper, IValidator<BeatDTO> validator)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _beatRepo = repo;
+            _validator = validator;
         }
 
-        public Beat CreateNewBeat(BeatDTO beat_)
+        public List<Beat> GetAllBeatsFromUser(int userId_)
         {
-            throw new NotImplementedException();
+            return _beatRepo.GetAllBeatsFromUser(userId_);
+        }
+
+        public Beat CreateNewBeat(BeatDTO beatDTO_, string userEmail_)
+        {
+
+            if (IsBeatStringValid(beatDTO_.BeatString)) {
+                var validation = _validator.Validate(beatDTO_);
+                if (!validation.IsValid)
+                {
+                    throw new ValidationException(validation.ToString());
+                }
+                Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
+                editedBeat.UserId = 1;
+                return _beatRepo.CreateNewBeat(editedBeat);
+            }
+            throw new Exception("Save data corrupted");
         }
 
         public Beat UpdateBeat(BeatDTO beat_)
