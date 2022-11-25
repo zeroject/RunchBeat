@@ -12,11 +12,11 @@ namespace Application.Validators
             RuleFor(x => x.Title).NotEmpty();
             
             //Rules for summary
-            RuleFor(x => x.Title).NotNull();
+            RuleFor(x => x.Summary).NotNull();
 
             //Rules for beatstring
-            RuleFor(x => x.Title).NotNull();
-            RuleFor(x => x.Title).NotEmpty();
+            RuleFor(x => x.BeatString).NotNull();
+            RuleFor(x => x.BeatString).NotEmpty();
         }
     }
 }

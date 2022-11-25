@@ -52,7 +52,32 @@ namespace Application
 
         public bool IsBeatStringValid(string beatString_)
         {
-            throw new NotImplementedException();
+            int number = 0;
+            int min = 1;
+            int max = 32;
+            char[] invalidChars = { 'æ', 'ø', 'å', '.', ',', ':', '´', '!', '"', '#', '¤', '¤', '%', '&', '/', '(', ')', '='};
+            for (int i = 0; i < beatString_.Length; i++)
+            {
+                if (int.TryParse(beatString_[i].ToString(), out number) && i % 2 == 0)
+                {
+                    if (number < min || number > max)
+                    {
+                        return false;
+                    }
+                }
+                for (int z = 0; z < invalidChars.Length; z++)
+                {
+                    if (beatString_[i].Equals(invalidChars[z]))
+                    {
+                        return false;
+                    }
+                }
+                if (!(i % 3 == 0 && beatString_[i] == ';'))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

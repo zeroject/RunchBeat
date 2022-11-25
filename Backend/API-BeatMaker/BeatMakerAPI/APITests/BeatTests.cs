@@ -3,14 +3,26 @@
 using Application;
 using Application.DTOs;
 using Application.Interfaces;
+using Application.Validators;
+using AutoMapper;
+using Domain;
+using FluentValidation;
+using Infrastructure;
 
 namespace APITests
 {
     public class BeatTests
     {
+        IBeatService beatService;
         public BeatTests()
         {
-
+            IBeatRepository beatRepository = new BeatRepository();
+            IValidator<BeatDTO> validator = new BeatValidator();
+            var mapper = new MapperConfiguration(config =>
+            {
+                config.CreateMap<BeatDTO, Beat>();
+            }).CreateMapper();
+            beatService = new BeatService(beatRepository, mapper, validator);
         }
 
         [Theory]
@@ -20,12 +32,10 @@ namespace APITests
         [InlineData("A3;B4;F7;A32;Æ32", false)]
         [InlineData("A3;B4;F7;A32;Ø32", false)]
         [InlineData("A3;B4;F7;A32;Å32", false)]
+        [InlineData("3A;4B;7F;32A;32D", false)]
         [InlineData("", false)]
         public void TestIfBeatstringIsValid(string beatstring_, bool expected_)
         {
-            //Arrange
-            IBeatService beatService = new BeatService();
-
             //Act
             bool actualValue = beatService.IsBeatStringValid(beatstring_);
 
@@ -40,10 +50,9 @@ namespace APITests
         public void TestIfUserIDisStillValid(int userID_, Type expected_)
         {
             //Arange
-            IBeatService beatService = new BeatService();
-            BeatDTO beatDTO = new BeatDTO() { BeatString="D5;E3;A7", Name="Test", Summary="this is a test", UserId=userID_};
+            BeatDTO beatDTO = new BeatDTO() { BeatString="D5;E3;A7", Title="Test", Summary="this is a test", UserId=userID_};
             //Act & Assert
-            Assert.Throws<ArgumentException>(() => beatService.CreateNewBeat(beatDTO));
+            Assert.Throws<ArgumentException>(() => beatService.CreateNewBeat(beatDTO, ""));
         }
 
     }
