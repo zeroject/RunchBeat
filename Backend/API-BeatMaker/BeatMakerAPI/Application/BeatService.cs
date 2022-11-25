@@ -56,25 +56,30 @@ namespace Application
             int min = 1;
             int max = 32;
             char[] invalidChars = { 'æ', 'ø', 'å', '.', ',', ':', '´', '!', '"', '#', '¤', '¤', '%', '&', '/', '(', ')', '='};
+
+            if (beatString_.Length < 3) { return false; }
             for (int i = 0; i < beatString_.Length; i++)
             {
-                if (int.TryParse(beatString_[i].ToString(), out number) && i % 2 == 0)
+                if (int.TryParse(beatString_[i].ToString(), out number))
                 {
                     if (number < min || number > max)
                     {
                         return false;
                     }
                 }
-                for (int z = 0; z < invalidChars.Length; z++)
+                for (int z = 0; z < invalidChars.Length; z++ )
                 {
-                    if (beatString_[i].Equals(invalidChars[z]))
+                    if (beatString_[i].Equals(invalidChars[z]) && !int.TryParse(beatString_[i + 1].ToString(), out number))
                     {
                         return false;
                     }
                 }
-                if (!(i % 3 == 0 && beatString_[i] == ';'))
+                if (!(i == 0))
                 {
-                    return false;
+                    if (!(int.TryParse(beatString_[i - 1].ToString(), out number) && beatString_[i].ToString().Contains(";")))
+                    {
+                        return false;
+                    }
                 }
             }
             return true;
