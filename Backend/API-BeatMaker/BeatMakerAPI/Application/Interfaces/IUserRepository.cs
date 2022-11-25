@@ -8,5 +8,6 @@ namespace Application.Interfaces
         public User CreateNewUser(User user_);
         public User UpdateUser(User user_);
         public void DeleteUser(string email_);
+        public User GetUserByEmail(string email_);
     }
 }

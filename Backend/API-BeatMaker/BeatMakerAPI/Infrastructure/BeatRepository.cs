@@ -31,14 +31,24 @@ namespace Infrastructure
             }
         }
 
-        public Beat UpdateBeat(Beat weightEntry_)
+        public Beat UpdateBeat(Beat beat_)
         {
-            throw new NotImplementedException();
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            {
+                context._beatEntries.Update(beat_);
+                context.SaveChanges();
+                return beat_;
+            }
         }
 
         public void DeleteBeat(int id_)
         {
-            throw new NotImplementedException();
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            {
+                Beat beatToDelete = context._beatEntries.Find(id_);
+                context._beatEntries.Remove(beatToDelete);
+                context.SaveChanges();
+            }
         }
     }
 }

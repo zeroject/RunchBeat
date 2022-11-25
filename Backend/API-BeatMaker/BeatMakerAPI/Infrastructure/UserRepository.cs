@@ -52,13 +52,6 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                if (CheckIfUserExists(user_.Email))
-                {
-                    throw new ArgumentException("That Email is already is in use");
-                } else if (CheckIfUserExists(user_.Username))
-                {
-                    throw new ArgumentException("That Username is already is in use");
-                }
                 context._userEntries.Update(user_);
                 context.SaveChanges();
                 return user_;
@@ -78,6 +71,14 @@ namespace Infrastructure
                 {
                     return false;
                 }
+            }
+        }
+
+        public User GetUserByEmail(string email_)
+        {
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            {
+                return (context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User"));
             }
         }
     }
