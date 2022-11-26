@@ -11,6 +11,7 @@ namespace Infrastructure.DependencyResolver
             services_.AddScoped<IBeatRepository, BeatRepository>();
             services_.AddScoped<IUserRepository, UserRepository>();
             services_.AddScoped<IDbRepository, DbRepository>();
+            services_.AddScoped<ILoginRepository, LoginRepository>();
         }
     }
 }
