@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeatMakerAPI.Controllers
@@ -7,14 +8,24 @@ namespace BeatMakerAPI.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        public LoginController()
+        private readonly IAuthenticationService _auth;
+        public LoginController(IAuthenticationService auth_)
         {
-
+            _auth = auth_;
         }
 
+        [HttpPost]
+        [Route("login")]
         public ActionResult Login(UserLoginDTO userLoginDTO_)
         {
-            return null;
+            try
+            {
+                return Ok(_auth.Login(userLoginDTO_));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

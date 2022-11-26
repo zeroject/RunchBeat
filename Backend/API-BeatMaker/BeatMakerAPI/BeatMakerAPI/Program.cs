@@ -1,4 +1,5 @@
 using Application.DTOs;
+using Application.Helpers;
 using AutoMapper;
 using Domain;
 using FluentValidation;
@@ -21,6 +22,8 @@ var mapper = new MapperConfiguration(config =>
 
 builder.Services.AddSingleton(mapper);
 
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
 Infrastructure.DependencyResolver.DependencyResolverService.RegisterInfrastructureLayer(builder.Services);
 Application.DependencyResolver.DependencyResolverService.RegisterApplicationLayer(builder.Services);
 
@@ -40,8 +43,6 @@ if (app.Environment.IsDevelopment())
         options.AllowAnyMethod();
     });
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

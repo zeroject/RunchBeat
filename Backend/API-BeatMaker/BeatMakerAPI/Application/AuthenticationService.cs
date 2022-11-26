@@ -1,34 +1,46 @@
 ﻿using Application.DTOs;
+using Application.Helpers;
 using Application.Interfaces;
 using Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Application
 {
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IUserService _userService;
-
-        public AuthenticationService(IUserService userService_)
+        private readonly AppSettings _appSettings;
+        public AuthenticationService(IUserService userService_, IOptions<AppSettings> appSettings_)
         {
             _userService = userService_;
+            _appSettings = appSettings_.Value;
         }
 
-        public string login(UserLoginDTO _userLoginDTO)
+        public string Login(UserLoginDTO _userLoginDTO)
         {
-            throw new NotImplementedException();
+            User user = _userService.GetUserByEmail(_userLoginDTO.Email);
+            if (BCrypt.Net.BCrypt.Verify(_userLoginDTO.Password + user.Salt, user.Password))
+            {
+                return GenerateToken(user);
+            }
+            throw new Exception("INVALID LOGIN");
         }
-
-        public string Register(UserDTO userDTO_)
+        
+        private string GenerateToken(User user_)
         {
-            _userService.CreateNewUser(userDTO_);
+            var key = Encoding.UTF8.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("email", user_.Email) }),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
         }
-
-
     }
 }
