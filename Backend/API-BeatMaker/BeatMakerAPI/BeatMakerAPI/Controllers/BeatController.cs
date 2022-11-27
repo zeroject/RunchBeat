@@ -4,10 +4,12 @@ using Application.Interfaces;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BeatMakerAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class BeatController : ControllerBase
     {

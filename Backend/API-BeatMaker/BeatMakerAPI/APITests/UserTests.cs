@@ -48,10 +48,10 @@ namespace APITests
         {
             // Arrange
             User user = new User() { Id = userId_, Username = username_, Password = password_, Email = email_, Is2FA = is2FA_};
-            userRepo.Setup(x => x.GetUser(username_, password_)).Returns(user);
+            userRepo.Setup(x => x.GetUserByEmailOrUsername(username_)).Returns(user);
 
             // Act
-            User userTest = userService.GetUser(username_, password_);
+            User userTest = userService.GetUserByEmailOrUsername(username_);
 
             // Assert
             Assert.Equal(email_, userTest.Email);

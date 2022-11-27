@@ -17,6 +17,9 @@ namespace Infrastructure
             modelBuilder.Entity<User>()
                 .Property(u => u.Id)
                 .ValueGeneratedOnAdd();
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
 
             //Beat MODEL BUILDER
             //Auto generate ID
@@ -29,6 +32,7 @@ namespace Infrastructure
                 .WithMany()
                 .HasForeignKey(w => w.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
         }
 
         //Mapping to entity classes

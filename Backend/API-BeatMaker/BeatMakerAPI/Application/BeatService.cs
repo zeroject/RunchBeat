@@ -51,7 +51,7 @@ namespace Application
 
         public List<Beat> GetAllBeatsFromUser(string userEmail_)
         {
-            return _beatRepo.GetAllBeatsFromUser(_userService.GetUserByEmail(userEmail_).Id);
+            return _beatRepo.GetAllBeatsFromUser(_userService.GetUserByEmailOrUsername(userEmail_).Id);
         }
 
         public Beat CreateNewBeat(BeatDTO beatDTO_, string userEmail_)
@@ -80,7 +80,7 @@ namespace Application
                     throw new ValidationException(validation.ToString());
                 }
                 Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
-                editedBeat.UserId = _userService.GetUserByEmail(userEmail_).Id;
+                editedBeat.UserId = _userService.GetUserByEmailOrUsername(userEmail_).Id;
                 return _beatRepo.UpdateBeat(editedBeat);
             }
             throw new Exception("Save data corrupted");
@@ -88,7 +88,7 @@ namespace Application
 
         public void DeleteBeat(string userEmail_)
         {
-            _beatRepo.DeleteBeat(_userService.GetUserByEmail(userEmail_).Id);
+            _beatRepo.DeleteBeat(_userService.GetUserByEmailOrUsername(userEmail_).Id);
         }
 
         public bool IsBeatStringValid(string beatString_)
