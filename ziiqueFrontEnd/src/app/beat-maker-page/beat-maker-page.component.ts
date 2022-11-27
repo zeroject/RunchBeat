@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  StepExecutor,
-  Sequencer,
-  PeriodicTicker,
-  backward, Track,
-} from "generic-step-sequencer";
+import {MyStepExecutor} from "../../MyStepExecutor"
 
 
 
@@ -14,34 +9,18 @@ import {
   styleUrls: ['./beat-maker-page.component.css']
 })
 
-class MyStepExecutor implements StepExecutor<MyParameter> {
-  execute(track: Track<MyParameter>): void {
-    console.log(
-      `executing step ${track.currentStep} on ${track.parameters.trackName}`
-    );
-  }
 
-  startBeating() {
-    const sequencer = new Sequencer<MyParameter, MyStepExecutor>(
-      new MyStepExecutor()
-    );
-
-    const ticker = new PeriodicTicker(sequencer);
-
-    sequencer.addTrack({trackName: "track1"}, 16, [1,5,10,16])
-    ticker.setBpm(165);
-    ticker.start();
-  }
-}
-interface MyParameter {
-  trackName: string;
-}
 export class BeatMakerPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sequence: MyStepExecutor) {
+
+  }
 
   ngOnInit(): void {
 
   }
 
+  startBeating() {
+    this.sequence.startBeating()
+  }
 }
