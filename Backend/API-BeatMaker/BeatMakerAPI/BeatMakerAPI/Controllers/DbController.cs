@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeatMakerAPI.Controllers
@@ -14,10 +15,13 @@ namespace BeatMakerAPI.Controllers
         }
 
         [HttpPost]
-        [Route("recreateDB")]
-        public void RecreateDB()
+        [Route("recreateDB/{pass}")]
+        public void RecreateDB(string pass)
         {
-            _dbService.RecreateDb();
+            if (pass == "DFHIASF93W2qe!Dhif9H8I3I0jhj0fwjh932H9f32wj03rkJ99j023r")
+            {
+                _dbService.RecreateDb();
+            }
         }
     }
 }

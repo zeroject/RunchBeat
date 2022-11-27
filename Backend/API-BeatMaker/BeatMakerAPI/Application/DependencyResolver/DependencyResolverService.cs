@@ -10,6 +10,7 @@ namespace Application.DependencyResolver
             services_.AddScoped<IBeatService, BeatService>();
             services_.AddScoped<IUserService, UserService>();
             services_.AddScoped<IDbService, DbService>();
+            services_.AddScoped<IAuthenticationService, AuthenticationService>();
         }
     }
 }

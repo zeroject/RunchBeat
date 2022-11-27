@@ -1,7 +1,9 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs;
+using Application.Interfaces;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Security.Cryptography;
 
 namespace Infrastructure
 {
@@ -74,11 +76,20 @@ namespace Infrastructure
             }
         }
 
-        public User GetUserByEmail(string email_)
+        public User GetUserByEmailOrUsername(string emailUsername_)
         {
-            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            try
             {
-                return (context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User"));
+                using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+                {
+                    return (context._userEntries.Where(x => x.Username == emailUsername_).ToList().FirstOrDefault());
+                }
+            } catch (Exception)
+            {
+                using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+                {
+                    return (context._userEntries.Where(x => x.Email == emailUsername_).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User"));
+                }
             }
         }
     }
