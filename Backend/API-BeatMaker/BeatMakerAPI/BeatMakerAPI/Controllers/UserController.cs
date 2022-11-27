@@ -3,11 +3,11 @@ using Application.DTOs;
 using Application.Interfaces;
 using Domain;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeatMakerAPI.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -20,6 +20,7 @@ namespace BeatMakerAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("getUser")]
         public ActionResult<User> GetUser(string username_, string password_)
         {
@@ -50,6 +51,7 @@ namespace BeatMakerAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [Route("updateUser")]
         public ActionResult<User> UpdateUser(UserDTO userDTO_)
         {
@@ -69,6 +71,7 @@ namespace BeatMakerAPI.Controllers
         }
         
         [HttpDelete]
+        [Authorize]
         [Route("deleteUser")]
         public void DeleteUser(string email_)
         {
