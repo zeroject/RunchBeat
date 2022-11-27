@@ -22,7 +22,7 @@ namespace Application
 
         public string Login(UserLoginDTO _userLoginDTO)
         {
-            User user = _userService.GetUserByEmail(_userLoginDTO.Email);
+            User user = _userService.GetUserByEmailOrUsername(_userLoginDTO.Username_Email);
             if (BCrypt.Net.BCrypt.Verify(_userLoginDTO.Password + user.Salt, user.Password))
             {
                 return GenerateToken(user);

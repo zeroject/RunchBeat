@@ -19,14 +19,6 @@ namespace BeatMakerAPI.Controllers
             _userService = userService_;
         }
 
-        [HttpGet]
-        [Authorize]
-        [Route("getUser")]
-        public ActionResult<User> GetUser(string username_, string password_)
-        {
-            return _userService.GetUser(username_, password_);
-        }
-
         [HttpPost]
         [Route("createUser")]
         public ActionResult<User> CreateNewUser(UserDTO userDTO_)

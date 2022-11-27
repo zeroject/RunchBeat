@@ -21,11 +21,6 @@ namespace Application
             _validator = validator;
         }
 
-        public User GetUser(string username_, string password_)
-        {
-            return _userRepo.GetUser(username_, password_);
-        }
-
         public User CreateNewUser(UserDTO userDTO_)
         {
             var validation = _validator.Validate(userDTO_);
@@ -60,9 +55,9 @@ namespace Application
             _userRepo.DeleteUser(email_);
         }
 
-        public User GetUserByEmail(string email_)
+        public User GetUserByEmailOrUsername(string emailUsername_)
         {
-            return _userRepo.GetUserByEmail(email_);
+            return _userRepo.GetUserByEmailOrUsername(emailUsername_);
         }
     }
 }
