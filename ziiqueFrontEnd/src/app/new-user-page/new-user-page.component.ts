@@ -17,7 +17,7 @@ export class NewUserPageComponent implements OnInit {
   cpassword: any;
   strengthvalue: any;
   isEmailTrue: any;
-  HttpStatus: any;
+  HttpStatus: number;
 
   strength(event: any) {
     this.strengthvalue = event
@@ -26,7 +26,9 @@ export class NewUserPageComponent implements OnInit {
 
   constructor(private router: Router, private snackbar: MatSnackBar, private http: HttpService)
   {
+    this.HttpStatus = 0
   }
+
 
   ngOnInit(): void {
 
@@ -46,9 +48,10 @@ export class NewUserPageComponent implements OnInit {
             password: this.password,
             is2FA: false
           }
-          this.HttpStatus = this.http.createUser(dto)
-          if(this.HttpStatus == "201"){
-            await this.router.navigate(['./BeatMaker'])
+          this.HttpStatus = await this.http.createUser(dto)
+          if(this.HttpStatus == 201)
+          {
+            await this.router.navigate(['/Login'])
           }
           else {
             this.snackbar.open("Username or Email is already taken", "Ok")
