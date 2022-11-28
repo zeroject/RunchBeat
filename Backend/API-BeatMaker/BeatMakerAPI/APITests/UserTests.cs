@@ -5,7 +5,6 @@ using Application.Validators;
 using AutoMapper;
 using Domain;
 using FluentValidation;
-using Infrastructure;
 using Moq;
 
 namespace APITests
