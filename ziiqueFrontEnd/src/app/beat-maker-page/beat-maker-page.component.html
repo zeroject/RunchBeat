@@ -1,2 +1,12 @@
 <h1>beat maker</h1>
 <button (click)="startBeating()"></button>
+<mat-card>
+  <mat-card *ngFor="let instrument of instruments">
+    <mat-action-row>
+      <div *ngFor="let note in instrument.notes">
+        <button (click)="addNote(note)">{{note}}</button>
+      </div>
+
+    </mat-action-row>
+  </mat-card>
+</mat-card>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {Instruments} from "./instruments";
+import {Note} from "./note";
 
 
 
@@ -11,6 +12,8 @@ import { Component, OnInit } from '@angular/core';
 
 
 export class BeatMakerPageComponent implements OnInit {
+  instruments: any;
+  notes: any;
 
   constructor() {
 
@@ -21,6 +24,9 @@ export class BeatMakerPageComponent implements OnInit {
   }
 
   startBeating() {
-    
+
+  }
+
+  addNote(note: Note) {
   }
 }
