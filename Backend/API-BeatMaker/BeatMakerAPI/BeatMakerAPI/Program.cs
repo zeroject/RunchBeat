@@ -4,7 +4,6 @@ using AutoMapper;
 using Domain;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -50,13 +49,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors(options =>
-    {
-        options.AllowAnyOrigin();
-        options.AllowAnyHeader();
-        options.AllowAnyMethod();
-    });
 }
+
+app.UseCors(options =>
+{
+    options.SetIsOriginAllowed(origin => true)
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

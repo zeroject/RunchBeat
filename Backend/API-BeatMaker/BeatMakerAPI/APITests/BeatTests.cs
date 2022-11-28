@@ -1,6 +1,4 @@
-﻿
-
-using Application;
+﻿using Application;
 using Application.DTOs;
 using Application.Interfaces;
 using Application.Validators;
