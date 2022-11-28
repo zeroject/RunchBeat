@@ -44,7 +44,7 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                return (context._userEntries.Where(x => x.Username == username_).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User"));
+                return context._userEntries.Where(x => x.Username == username_).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User");
             }
         }
 
@@ -52,7 +52,8 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                context._userEntries.Update(user_);
+                User userToUpdate = context._userEntries.Where(x => x.Email == user_.Email).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User");
+                context._userEntries.Update(userToUpdate);
                 context.SaveChanges();
                 return user_;
             }
