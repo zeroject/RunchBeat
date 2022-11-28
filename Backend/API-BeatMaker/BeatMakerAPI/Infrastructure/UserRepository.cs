@@ -76,18 +76,29 @@ namespace Infrastructure
 
         public User GetUserByEmailOrUsername(string emailUsername_)
         {
-            try
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+                User userFromEmail = context._userEntries.Where(x => x.Email == emailUsername_).ToList().FirstOrDefault();
+                User userFromUsername;
+
+                if (userFromEmail != null)
                 {
-                    return (context._userEntries.Where(x => x.Username == emailUsername_).ToList().FirstOrDefault());
+                    return userFromEmail;
                 }
-            } catch (Exception)
-            {
-                using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+                else
                 {
-                    return (context._userEntries.Where(x => x.Email == emailUsername_).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User"));
+                    userFromUsername = context._userEntries.Where(x => x.Username == emailUsername_).ToList().FirstOrDefault();
                 }
+                
+                if (userFromUsername != null)
+                {
+                    return userFromUsername;
+                }
+                else
+                {
+                    throw new Exception("Could not find User");
+                }
+
             }
         }
     }
