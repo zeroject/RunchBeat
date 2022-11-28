@@ -8,7 +8,6 @@ namespace Application
 {
     public class BeatService : IBeatService
     {
-        Dictionary<string, int> _cheksumDictionary = new Dictionary<string, int>();
         private IBeatRepository _beatRepo;
         private IMapper _mapper;
         private IValidator<BeatDTO> _validator;
@@ -20,33 +19,6 @@ namespace Application
             _beatRepo = repo;
             _validator = validator;
             _userService = userService;
-
-            _cheksumDictionary.Add("A", 1);
-            _cheksumDictionary.Add("B", 2);
-            _cheksumDictionary.Add("C", 3);
-            _cheksumDictionary.Add("D", 4);
-            _cheksumDictionary.Add("E", 5);
-            _cheksumDictionary.Add("F", 6);
-            _cheksumDictionary.Add("G", 7);
-            _cheksumDictionary.Add("H", 8);
-            _cheksumDictionary.Add("I", 9);
-            _cheksumDictionary.Add("J", 10);
-            _cheksumDictionary.Add("K", 11);
-            _cheksumDictionary.Add("L", 12);
-            _cheksumDictionary.Add("M", 13);
-            _cheksumDictionary.Add("N", 14);
-            _cheksumDictionary.Add("O", 15);
-            _cheksumDictionary.Add("P", 16);
-            _cheksumDictionary.Add("Q", 17);
-            _cheksumDictionary.Add("R", 18);
-            _cheksumDictionary.Add("S", 19);
-            _cheksumDictionary.Add("T", 20);
-            _cheksumDictionary.Add("U", 21);
-            _cheksumDictionary.Add("V", 22);
-            _cheksumDictionary.Add("W", 23);
-            _cheksumDictionary.Add("X", 24);
-            _cheksumDictionary.Add("Y", 25);
-            _cheksumDictionary.Add("Z", 26);
         }
 
         public List<Beat> GetAllBeatsFromUser(string userEmail_)
@@ -93,6 +65,9 @@ namespace Application
 
         public bool IsBeatStringValid(string beatString_)
         {
+            char[] alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+            Span<char> alpahbetSpan = new Span<char>(alphabet);
+
             int cheksumCheck = 0;
             string beatSequence = beatString_.Replace(";", "");
             string[] cheksumString = beatSequence.Split(":");
@@ -103,7 +78,13 @@ namespace Application
             {
                 if (!Char.IsDigit(beatString[i]))
                 {
-                    cheksumCheck = _cheksumDictionary[beatString[i].ToString()] + cheksumCheck;
+                    for (int j = 0; j < alphabet.Length; j++)
+                    {
+                        if (beatString[i] == alphabet[j])
+                        {
+                            cheksumCheck = j+1 + cheksumCheck;
+                        }
+                    }
                 }
                 else
                 {
