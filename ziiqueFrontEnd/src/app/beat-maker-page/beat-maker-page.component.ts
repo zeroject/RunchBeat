@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MyStepExecutor} from "../../MyStepExecutor"
+
 
 
 
@@ -12,7 +12,7 @@ import {MyStepExecutor} from "../../MyStepExecutor"
 
 export class BeatMakerPageComponent implements OnInit {
 
-  constructor(private sequence: MyStepExecutor) {
+  constructor() {
 
   }
 
@@ -21,6 +21,6 @@ export class BeatMakerPageComponent implements OnInit {
   }
 
   startBeating() {
-    this.sequence.startBeating()
+    
   }
 }
