@@ -34,6 +34,7 @@ namespace Application
                 Email = userDTO_.Email,
                 Username = userDTO_.Username,
                 Password = BCrypt.Net.BCrypt.HashPassword(userDTO_.Password + salt),
+                Salt = salt,
                 Is2FA = false,
                 Id = 0
             };
