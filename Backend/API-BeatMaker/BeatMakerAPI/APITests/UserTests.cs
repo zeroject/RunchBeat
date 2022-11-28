@@ -55,5 +55,37 @@ namespace APITests
             // Assert
             Assert.Equal(email_, userTest.Email);
         }
+
+        [Theory]
+        [InlineData("ab@gmail.com")]
+        [InlineData("ba@gmail.com")]
+        public void TestIfUserWasDeleted(string email_)
+        {
+            // Arrange
+            User[] fakeRepo = new User[]
+            {
+                new User() { Id = 1, Username = "test", Password = "SecretPass123", Email = "ab@gmail.com", Is2FA = false },
+                new User() { Id = 1, Username = "test2", Password = "Password421", Email = "ba@gmail.com", Is2FA = false }
+            };
+            userRepo.Setup(x => x.GetUserByEmailOrUsername(email_)).Returns(fakeRepo[1]);
+            userRepo.Setup(x => x.DeleteUser(email_));
+            // Act
+            userService.DeleteUser(email_);
+            // Assert
+            userRepo.Verify(r => r.DeleteUser(email_), Times.Once);
+        }
+
+        [Fact]
+        public void TestIfUserWasUpdated()
+        {
+            // Arrange
+            User user = new User() { Id = 0, Email="test@gmail.com", Password="password12345", Username="HelloBabt", Is2FA=false};
+            UserDTO userDTO = new UserDTO() { Email="test@gmail.com", Password= "password12345", Username="HelloBabt", Is2FA=false};
+            userRepo.Setup(x => x.UpdateUser(user));
+            // Act
+            userService.UpdateUser(userDTO);
+            // Assert
+            userRepo.Verify(r => r.UpdateUser(user), Times.Once);
+        }
     }
 }
