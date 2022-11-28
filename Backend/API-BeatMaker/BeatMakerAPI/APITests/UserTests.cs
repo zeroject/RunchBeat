@@ -80,12 +80,13 @@ namespace APITests
         {
             // Arrange
             User user = new User() { Id = 0, Email="test@gmail.com", Password="password12345", Username="HelloBabt", Is2FA=false};
-            UserDTO userDTO = new UserDTO() { Email="test@gmail.com", Password= "password12345", Username="HelloBabt", Is2FA=false};
-            userRepo.Setup(x => x.UpdateUser(user));
+            User userUpdate = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt", Is2FA=false};
+            UserDTO userDTO = new UserDTO() { Email= "test@gmail.com", Password= "password123456", Username="HelloBabt", Is2FA=false};
+            userRepo.Setup(x => x.UpdateUser(user)).Returns(user);
             // Act
             userService.UpdateUser(userDTO);
             // Assert
-            userRepo.Verify(r => r.UpdateUser(user), Times.Once);
+            userRepo.Verify(r => r.UpdateUser(userUpdate), Times.Once);
         }
     }
 }
