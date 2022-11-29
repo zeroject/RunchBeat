@@ -91,11 +91,12 @@ namespace BeatMakerAPI.Controllers
         [HttpDelete]
         [Authorize]
         [Route("deleteUser")]
-        public void DeleteUser(string email_)
+        public ActionResult DeleteUser(string email_)
         {
             try
             {
                 _userService.DeleteUser(email_);
+                return Ok();
             }
             catch (ArgumentException e)
             {
@@ -106,4 +107,5 @@ namespace BeatMakerAPI.Controllers
                 return StatusCode(500, e.ToString());
             }
         }
+    }
 }

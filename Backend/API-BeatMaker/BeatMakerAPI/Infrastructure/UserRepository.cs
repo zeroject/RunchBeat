@@ -13,6 +13,34 @@ namespace Infrastructure
             _options = new DbContextOptionsBuilder<DbContext>().UseSqlite("Data Source = db.db").Options;
         }
 
+        public User GetUserByEmailOrUsername(string emailUsername_)
+        {
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            {
+                User userFromEmail = context._userEntries.Where(x => x.Email == emailUsername_).ToList().FirstOrDefault();
+                User userFromUsername;
+
+                if (userFromEmail != null)
+                {
+                    return userFromEmail;
+                }
+                else
+                {
+                    userFromUsername = context._userEntries.Where(x => x.Username == emailUsername_).ToList().FirstOrDefault();
+                }
+
+                if (userFromUsername != null)
+                {
+                    return userFromUsername;
+                }
+                else
+                {
+                    throw new Exception("Could not find User");
+                }
+
+            }
+        }
+
         public User CreateNewUser(User user_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Transient))
@@ -64,34 +92,6 @@ namespace Infrastructure
                 {
                     return false;
                 }
-            }
-        }
-
-        public User GetUserByEmailOrUsername(string emailUsername_)
-        {
-            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
-            {
-                User userFromEmail = context._userEntries.Where(x => x.Email == emailUsername_).ToList().FirstOrDefault();
-                User userFromUsername;
-
-                if (userFromEmail != null)
-                {
-                    return userFromEmail;
-                }
-                else
-                {
-                    userFromUsername = context._userEntries.Where(x => x.Username == emailUsername_).ToList().FirstOrDefault();
-                }
-                
-                if (userFromUsername != null)
-                {
-                    return userFromUsername;
-                }
-                else
-                {
-                    throw new Exception("Could not find User");
-                }
-
             }
         }
     }

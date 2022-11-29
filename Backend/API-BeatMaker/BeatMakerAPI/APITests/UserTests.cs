@@ -39,6 +39,7 @@ namespace APITests
                 Assert.Equal(typeof(ValidationException), e.GetType());
             };
         }
+
         [Theory]
         [InlineData(1, "Casper", "gal12345", "adof@gg.org", true)]
         [InlineData(2, "Anders", "MegetSikkertKodeord", "anders@zomf.org", false)]
@@ -54,25 +55,6 @@ namespace APITests
 
             // Assert
             Assert.Equal(email_, userTest.Email);
-        }
-
-        [Theory]
-        [InlineData("ab@gmail.com")]
-        [InlineData("ba@gmail.com")]
-        public void TestIfUserWasDeleted(string email_)
-        {
-            // Arrange
-            User[] fakeRepo = new User[]
-            {
-                new User() { Id = 1, Username = "test", Password = "SecretPass123", Email = "ab@gmail.com", Is2FA = false },
-                new User() { Id = 1, Username = "test2", Password = "Password421", Email = "ba@gmail.com", Is2FA = false }
-            };
-            _userRepo.Setup(x => x.GetUserByEmailOrUsername(email_)).Returns(fakeRepo[1]);
-            _userRepo.Setup(x => x.DeleteUser(It.IsAny<string>()));
-            // Act
-            _userService.DeleteUser(email_);
-            // Assert
-            _userRepo.Verify(r => r.DeleteUser(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -101,6 +83,25 @@ namespace APITests
             _userService.UpdateUserPassword(userDTO);
             // Assert
             _userRepo.Verify(r => r.UpdateUser(It.IsAny<User>()), Times.Once);
+        }
+
+        [Theory]
+        [InlineData("ab@gmail.com")]
+        [InlineData("ba@gmail.com")]
+        public void TestIfUserWasDeleted(string email_)
+        {
+            // Arrange
+            User[] fakeRepo = new User[]
+            {
+                new User() { Id = 1, Username = "test", Password = "SecretPass123", Email = "ab@gmail.com", Is2FA = false },
+                new User() { Id = 1, Username = "test2", Password = "Password421", Email = "ba@gmail.com", Is2FA = false }
+            };
+            _userRepo.Setup(x => x.GetUserByEmailOrUsername(email_)).Returns(fakeRepo[1]);
+            _userRepo.Setup(x => x.DeleteUser(It.IsAny<string>()));
+            // Act
+            _userService.DeleteUser(email_);
+            // Assert
+            _userRepo.Verify(r => r.DeleteUser(It.IsAny<string>()), Times.Once);
         }
     }
 }

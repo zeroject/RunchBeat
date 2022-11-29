@@ -21,6 +21,11 @@ namespace Application
             _validator = validator_;
         }
 
+        public User GetUserByEmailOrUsername(string emailUsername_)
+        {
+            return _userRepo.GetUserByEmailOrUsername(emailUsername_);
+        }
+
         public User CreateNewUser(UserDTO userDTO_)
         {
             var validation = _validator.Validate(userDTO_);
@@ -69,11 +74,6 @@ namespace Application
         public void DeleteUser(string email_)
         {
             _userRepo.DeleteUser(email_);
-        }
-
-        public User GetUserByEmailOrUsername(string emailUsername_)
-        {
-            return _userRepo.GetUserByEmailOrUsername(emailUsername_);
         }
 
         private string HashString(string hashableString_, string salt_)
