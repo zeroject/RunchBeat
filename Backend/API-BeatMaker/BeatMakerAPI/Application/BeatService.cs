@@ -85,6 +85,7 @@ namespace Application
                         if (beatString[i] == alphabet[j])
                         {
                             cheksumCheck = j+1 + cheksumCheck;
+                            break;
                         }
                     }
                 }

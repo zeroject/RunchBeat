@@ -88,5 +88,19 @@ namespace APITests
             // Assert
             _userRepo.Verify(r => r.UpdateUser(It.IsAny<User>()), Times.Once);
         }
+
+        [Fact]
+        public void TestIfPasswordWasUpdated()
+        {
+            // Arrange
+            User user = new User() { Id = 0, Email = "test@gmail.com", Password = "password12345", Username = "HelloBabt", Is2FA = false };
+            User userUpdate = new User() { Id = 0, Email = "test@gmail.com", Password = "password123456", Username = "HelloBabt", Is2FA = false };
+            UserDTO userDTO = new UserDTO() { Email = "test@gmail.com", Password = "password123456", Username = "HelloBabt", Is2FA = false };
+            _userRepo.Setup(x => x.UpdateUser(It.IsAny<User>())).Returns(user);
+            // Act
+            _userService.UpdateUserPassword(userDTO);
+            // Assert
+            _userRepo.Verify(r => r.UpdateUser(It.IsAny<User>()), Times.Once);
+        }
     }
 }

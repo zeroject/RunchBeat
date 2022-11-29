@@ -68,11 +68,14 @@ namespace APITests
         public void TestIfBeatWasDeleted()
         {
             // Arrange
+            User user = new User() { Id = 1 };
             BeatDTO beatDTO = new BeatDTO() { BeatString = "A04;B04;D04;:19", Summary = "Testing test", Title = "Test", UserId = 1 };
             _beatRepo.Setup(x => x.DeleteBeat(It.IsAny<Beat>()));
+            _userRepo.Setup(x => x.GetUserByEmailOrUsername(It.IsAny<string>())).Returns(user);
 
             // Act
             _beatService.DeleteBeat(beatDTO, "test@test.gmail");
+
             // Assert
             _beatRepo.Verify(x => x.DeleteBeat(It.IsAny<Beat>()), Times.Once);
         }
@@ -82,13 +85,24 @@ namespace APITests
         {
             // Arrange
             List<Beat> beats = new List<Beat>();
+            User user = new User() { Id = 1 };
             Beat beat = new Beat() { BeatString = "A04;B04;D04;:19", Summary = "Testing test", Title = "Test", UserId = 1, Id = 0 };
+            Beat updatedBeat = new Beat() { BeatString = "A14;B04;D04;:19", Summary = "Testing test", Title = "Tesgfggfgfjsdaft", UserId = 1, Id = 0 };
             BeatDTO beatDTO = new BeatDTO() { BeatString = "A04;B04;D04;:19", Summary = "Testing test", Title = "Test", UserId = 1 };
             beats.Add(beat);
-            _beatRepo.Setup(x => x.UpdateBeat(It.IsAny<Beat>()));
+            _beatRepo.Setup(x => x.UpdateBeat(It.IsAny<Beat>())).Returns(() => {
+                beats.Remove(beat);
+                beats.Add(beat);
+                return beat;
+
+            });
+            _userRepo.Setup(x => x.GetUserByEmailOrUsername(It.IsAny<string>())).Returns(user);
+
             // Act
             _beatService.UpdateBeat(beatDTO, "test@test.com");
+
             // Assert
+            Assert.NotEqual(beat, updatedBeat);
             _beatRepo.Verify(x => x.UpdateBeat(It.IsAny<Beat>()));
         }
 

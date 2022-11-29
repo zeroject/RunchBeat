@@ -9,5 +9,6 @@ namespace Application.Interfaces
         public User UpdateUser(UserDTO userDTO_);
         public void DeleteUser(string email_);
         public User GetUserByEmailOrUsername(string emailUsername_);
+        public User UpdateUserPassword(UserDTO userDTO_);
     }
 }
