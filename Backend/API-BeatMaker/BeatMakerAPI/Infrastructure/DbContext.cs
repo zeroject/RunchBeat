@@ -17,20 +17,25 @@ namespace Infrastructure
             modelBuilder.Entity<User>()
                 .Property(u => u.Id)
                 .ValueGeneratedOnAdd();
+            // Set email property to unique
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
+                .IsUnique();
+            //Set username property to unique
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
                 .IsUnique();
 
             //Beat MODEL BUILDER
             //Auto generate ID
             modelBuilder.Entity<Beat>()
-                .Property(w => w.Id)
+                .Property(b => b.Id)
                 .ValueGeneratedOnAdd();
-            //Add One To Many Relationship
+            //Add One To Many Relationship & cascade on user delete
             modelBuilder.Entity<Beat>()
                 .HasOne<User>()
                 .WithMany()
-                .HasForeignKey(w => w.UserId)
+                .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
             
         }

@@ -58,9 +58,11 @@ namespace Application
             throw new Exception("Save data corrupted");
         }
 
-        public void DeleteBeat(string userEmail_)
+        public void DeleteBeat(BeatDTO beatDTO_, string userEmail_)
         {
-            _beatRepo.DeleteBeat(_userService.GetUserByEmailOrUsername(userEmail_).Id);
+            Beat beat = _mapper.Map<Beat>(beatDTO_);
+            beat.UserId = _userService.GetUserByEmailOrUsername(userEmail_).Id;
+            _beatRepo.DeleteBeat(beat);
         }
 
         public bool IsBeatStringValid(string beatString_)

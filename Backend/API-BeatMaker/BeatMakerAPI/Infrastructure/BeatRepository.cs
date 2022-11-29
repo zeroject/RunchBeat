@@ -41,11 +41,11 @@ namespace Infrastructure
             }
         }
 
-        public void DeleteBeat(int id_)
+        public void DeleteBeat(Beat beat_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                Beat beatToDelete = context._beatEntries.Find(id_);
+                Beat beatToDelete = context._beatEntries.Where(x => x.Title == beat_.Title && x.UserId == beat_.UserId).ToList().FirstOrDefault();
                 context._beatEntries.Remove(beatToDelete);
                 context.SaveChanges();
             }
