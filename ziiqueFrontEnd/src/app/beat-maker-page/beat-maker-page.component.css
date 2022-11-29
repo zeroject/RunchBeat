@@ -1,0 +1,31 @@
+.green{
+  background-color: green;
+}
+
+.basic{
+  background-color: lightgray;
+}
+
+.mat-card{
+  border-radius: 0px;
+}
+
+#beatBoard{
+  display: grid;
+  place-items: center;
+  grid-auto-flow: row;
+  row-gap: 0px;
+}
+
+#intBoard{
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 10px;
+  padding: 5px;
+}
+
+#beatBtn{
+  min-height: 40px;
+  min-width: 40px;
+
+}

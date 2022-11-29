@@ -1,10 +1,8 @@
 <h1>beat maker</h1>
 <button (click)="startBeating()"></button>
-
-  <mat-card *ngFor="let instruments of instrumentList;">
-      <mat-card >
-        <button mat-raised-button *ngFor="let note of instruments.notes" (click)="addNote(note)"> {{this.note.position}} </button>
-      </mat-card>
+<div id="beatBoard">
+  <mat-card id="intBoard" *ngFor="let instruments of instrumentList;">
+        <button id="beatBtn" mat-raised-button *ngFor="let note of instruments.notes" (click)="addNote(note)" [ngClass]="{'green': note.isToggled,'basic': !note.isToggled}"></button>
   </mat-card>
-
+</div>
 

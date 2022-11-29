@@ -48,10 +48,15 @@ export class BeatMakerPageComponent implements OnInit {
   }
 
   addNote(note: Note) {
+    console.log(note.position, note.isToggled)
     if (note.isToggled)
     {
       note.isToggled = false;
     }
-    this.sequence.push(note)
+    else{
+      note.isToggled = true;
+      this.sequence.push(note)
+    }
+
   }
 }

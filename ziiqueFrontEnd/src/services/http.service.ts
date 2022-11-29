@@ -37,8 +37,6 @@ async login(dto: any)
     this.username_Email = t.username_Email;
     this.email = t.email;
     this.twoFA = t.twoFA;
-    console.log("trying to route")
-  console.log(localStorage.getItem("token"))
     await this.router.navigate(['./BeatMaker'])
 
 }
