@@ -1,5 +1,7 @@
 .green{
-  background-color: green;
+  background-color: #58cd36;
+  border-color: green;
+  box-shadow: 0 0 10px green;
 }
 
 .basic{
