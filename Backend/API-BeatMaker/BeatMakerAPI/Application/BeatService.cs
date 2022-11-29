@@ -13,12 +13,12 @@ namespace Application
         private IValidator<BeatDTO> _validator;
         private IUserService _userService;
 
-        public BeatService(IBeatRepository repo, IMapper mapper, IValidator<BeatDTO> validator, IUserService userService)
+        public BeatService(IBeatRepository repo_, IMapper mapper_, IValidator<BeatDTO> validator_, IUserService userService_)
         {
-            _mapper = mapper;
-            _beatRepo = repo;
-            _validator = validator;
-            _userService = userService;
+            _mapper = mapper_;
+            _beatRepo = repo_;
+            _validator = validator_;
+            _userService = userService_;
         }
 
         public List<Beat> GetAllBeatsFromUser(string userEmail_)

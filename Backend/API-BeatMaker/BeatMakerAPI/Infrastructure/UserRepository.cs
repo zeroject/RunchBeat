@@ -40,14 +40,6 @@ namespace Infrastructure
             }
         }
 
-        public User GetUser(string username_, string password_)
-        {
-            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
-            {
-                return context._userEntries.Where(x => x.Username == username_).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User");
-            }
-        }
-
         public User UpdateUser(User user_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))

@@ -49,7 +49,7 @@ namespace BeatMakerAPI.Controllers
             try
             {
                 var updatedUser = _userService.UpdateUser(userDTO_);
-                return Created("User/Updated ", updatedUser);
+                return Ok(updatedUser);
             }
             catch (ValidationException e)
             {
@@ -67,6 +67,21 @@ namespace BeatMakerAPI.Controllers
         public void DeleteUser(string email_)
         {
             _userService.DeleteUser(email_);
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Route("updatePassword")]
+        public ActionResult<User> UpdatePassword(UserDTO userDTO_)
+        {
+            try
+            {
+                return Ok(_userService.UpdateUserPassword(userDTO_));
+            }
+            catch( Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

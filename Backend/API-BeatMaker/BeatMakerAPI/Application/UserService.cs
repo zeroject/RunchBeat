@@ -14,11 +14,11 @@ namespace Application
         private IMapper _mapper;
         private IValidator<UserDTO> _validator;
 
-        public UserService(IUserRepository repo, IMapper mapper, IValidator<UserDTO> validator)
+        public UserService(IUserRepository repo_, IMapper mapper_, IValidator<UserDTO> validator_)
         {
-            _mapper = mapper;
-            _userRepo = repo;
-            _validator = validator;
+            _mapper = mapper_;
+            _userRepo = repo_;
+            _validator = validator_;
         }
 
         public User CreateNewUser(UserDTO userDTO_)

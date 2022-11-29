@@ -72,9 +72,9 @@ namespace BeatMakerAPI.Controllers
 
         [HttpDelete]
         [Route("deleteBeat")]
-        public void DeleteBeat(string userEmail_)
+        public void DeleteBeat(BeatDTO beatDTO_, string userEmail_)
         {
-            _beatService.DeleteBeat(userEmail_);
+            _beatService.DeleteBeat(beatDTO_, userEmail_);
         }
     }
 }
