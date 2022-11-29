@@ -68,11 +68,11 @@ namespace APITests
                 new User() { Id = 1, Username = "test2", Password = "Password421", Email = "ba@gmail.com", Is2FA = false }
             };
             _userRepo.Setup(x => x.GetUserByEmailOrUsername(email_)).Returns(fakeRepo[1]);
-            _userRepo.Setup(x => x.DeleteUser(email_));
+            _userRepo.Setup(x => x.DeleteUser(It.IsAny<string>()));
             // Act
             _userService.DeleteUser(email_);
             // Assert
-            _userRepo.Verify(r => r.DeleteUser(email_), Times.Once);
+            _userRepo.Verify(r => r.DeleteUser(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -82,11 +82,11 @@ namespace APITests
             User user = new User() { Id = 0, Email="test@gmail.com", Password="password12345", Username="HelloBabt", Is2FA=false};
             User userUpdate = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt", Is2FA=false};
             UserDTO userDTO = new UserDTO() { Email= "test@gmail.com", Password= "password123456", Username="HelloBabt", Is2FA=false};
-            _userRepo.Setup(x => x.UpdateUser(user)).Returns(user);
+            _userRepo.Setup(x => x.UpdateUser(It.IsAny<User>())).Returns(user);
             // Act
             _userService.UpdateUser(userDTO);
             // Assert
-            _userRepo.Verify(r => r.UpdateUser(userUpdate), Times.Once);
+            _userRepo.Verify(r => r.UpdateUser(It.IsAny<User>()), Times.Once);
         }
     }
 }
