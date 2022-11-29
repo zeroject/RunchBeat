@@ -23,20 +23,10 @@ namespace Infrastructure
                 }
                 else
                 {
-                    context._userEntries.Add(user_);
+                    _ = context._userEntries.Add(user_) ?? throw new ArgumentException("Failed to create user");
                     context.SaveChanges();
                     return user_;
                 }
-            }
-        }
-
-        public void DeleteUser(string email_)
-        {
-            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
-            {
-                User userToDelete = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault();
-                context._userEntries.Remove(userToDelete);
-                context.SaveChanges();
             }
         }
 
@@ -51,11 +41,21 @@ namespace Infrastructure
             }
         }
 
+        public void DeleteUser(string email_)
+        {
+            using (var context = new DbContext(_options, ServiceLifetime.Scoped))
+            {
+                User userToDelete = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault() ?? throw new ArgumentException("Failed to delete user");
+                context._userEntries.Remove(userToDelete);
+                context.SaveChanges();
+            }
+        }
+
         private bool CheckIfUserExists(string email_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Transient))
             {
-                User user = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault();
+                User user = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault() ?? throw new ArgumentException("Failed to create user");
                 if (user != null)
                 {
                     return true;

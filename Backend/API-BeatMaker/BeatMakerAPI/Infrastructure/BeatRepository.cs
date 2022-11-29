@@ -17,7 +17,7 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                return (context._beatEntries.Where(x => x.UserId == userId_).ToList() ?? throw new KeyNotFoundException("Could not find User"));
+                return context._beatEntries.Where(x => x.UserId == userId_).ToList() ?? throw new KeyNotFoundException("Could not find User");
             }
         }
 
@@ -35,7 +35,7 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                context._beatEntries.Update(beat_);
+                _ = context._beatEntries.Update(beat_) ?? throw new Exception("Could not update Beat");
                 context.SaveChanges();
                 return beat_;
             }
@@ -45,7 +45,7 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                Beat beatToDelete = context._beatEntries.Where(x => x.Title == beat_.Title && x.UserId == beat_.UserId).ToList().FirstOrDefault();
+                Beat beatToDelete = context._beatEntries.Where(x => x.Title == beat_.Title && x.UserId == beat_.UserId).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find Beat");
                 context._beatEntries.Remove(beatToDelete);
                 context.SaveChanges();
             }

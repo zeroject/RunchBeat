@@ -33,7 +33,7 @@ namespace BeatMakerAPI.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode(233, e.Message);
+                return StatusCode(422, e.Message);
             }
             catch (Exception e)
             {
@@ -55,18 +55,14 @@ namespace BeatMakerAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
+            catch (ArgumentException e)
+            {
+                return StatusCode(422, e.ToString());
+            }
             catch (Exception e)
             {
                 return StatusCode(500, e.ToString());
             }
-        }
-        
-        [HttpDelete]
-        [Authorize]
-        [Route("deleteUser")]
-        public void DeleteUser(string email_)
-        {
-            _userService.DeleteUser(email_);
         }
 
         [HttpPut]
@@ -78,10 +74,36 @@ namespace BeatMakerAPI.Controllers
             {
                 return Ok(_userService.UpdateUserPassword(userDTO_));
             }
-            catch( Exception e)
+            catch (ValidationException e)
             {
                 return BadRequest(e.Message);
             }
+            catch (ArgumentException e)
+            {
+                return StatusCode(422, e.ToString());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.ToString());
+            }
         }
-    }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("deleteUser")]
+        public void DeleteUser(string email_)
+        {
+            try
+            {
+                _userService.DeleteUser(email_);
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode(422, e.ToString());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.ToString());
+            }
+        }
 }

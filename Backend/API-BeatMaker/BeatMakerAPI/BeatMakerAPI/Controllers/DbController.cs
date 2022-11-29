@@ -15,12 +15,21 @@ namespace BeatMakerAPI.Controllers
 
         [HttpPost]
         [Route("recreateDB/{pass}")]
-        public void RecreateDB(string pass_)
+        public ActionResult RecreateDB(string pass_)
         {
             if (pass_ == "DFHIASF93W2qe!Dhif9H8I3I0jhj0fwjh932H9f32wj03rkJ99j023r")
             {
-                _dbService.RecreateDb();
+                try
+                {
+                    _dbService.RecreateDb();
+                     return Ok();
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(500, e.Message);
+                }
             }
+            return StatusCode(422, "Wrong password");
         }
     }
 }
