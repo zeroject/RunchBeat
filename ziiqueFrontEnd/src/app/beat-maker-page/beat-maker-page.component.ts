@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Instruments} from "./instruments";
 import {Note} from "./note";
+import {sequence} from "@angular/animations";
 
-
+let names = ["A","B","C","D","E"]
+let NumberOfBars = 16;
 
 @Component({
   selector: 'app-beat-maker-page',
@@ -10,11 +12,9 @@ import {Note} from "./note";
   styleUrls: ['./beat-maker-page.component.css']
 })
 
-let names = ["A","B","C","D","E"]
-let instrumentList: Instruments[]
-let NumberOfBars = 16;
-
 export class BeatMakerPageComponent implements OnInit {
+  instrumentList: Instruments[] = [];
+  sequence: Note[] = [];
 
 
 
@@ -23,6 +23,7 @@ export class BeatMakerPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createInstruments()
 
   }
 
@@ -33,19 +34,24 @@ export class BeatMakerPageComponent implements OnInit {
   createInstruments()
 
   {
-    for (const name in names) {
-      let instrument : Instruments = {notes: [], name: name}
-      instrumentList.push(instrument)
+    for (let i = 0; i < names.length; i++) {
+        let instrument : Instruments = {notes: [], nameN: names[i]}
+        this.instrumentList.push(instrument)
     }
-    for (let i = 0; i < instrumentList.length; i++) {
-      for (let pos = 1; pos < NumberOfBars; pos++) {
-        let node:Note = {position: pos.toString() + instrumentList[i], sound: instrumentList[i].name}
-        instrumentList[i].notes.push(node)
+    for (let i = 0; i < this.instrumentList.length; i++) {
+      for (let pos = 1; pos < NumberOfBars+1; pos++) {
+        let node:Note = {position: pos+"" + this.instrumentList[i].nameN, sound: this.instrumentList[i].nameN, isToggled: false}
+        this.instrumentList[i].notes.push(node)
       }
     }
 
   }
 
   addNote(note: Note) {
+    if (note.isToggled)
+    {
+      note.isToggled = false;
+    }
+    this.sequence.push(note)
   }
 }
