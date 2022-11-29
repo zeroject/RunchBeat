@@ -14,6 +14,7 @@ let NumberOfBars = 16;
 
 export class BeatMakerPageComponent implements OnInit {
   instrumentList: Instruments[] = [];
+  demoNode: Note[] = [];
   sequence: Note[] = [];
 
 
@@ -24,6 +25,7 @@ export class BeatMakerPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.createInstruments()
+    this.createDemoIns()
 
   }
 
@@ -32,7 +34,6 @@ export class BeatMakerPageComponent implements OnInit {
   }
 
   createInstruments()
-
   {
     for (let i = 0; i < names.length; i++) {
         let instrument : Instruments = {notes: [], nameN: names[i]}
@@ -44,7 +45,15 @@ export class BeatMakerPageComponent implements OnInit {
         this.instrumentList[i].notes.push(node)
       }
     }
+  }
 
+  createDemoIns()
+  {
+    for (let i = 0; i < names.length; i++) {
+      let node : Note = {position: 0+ names[i], sound: names[i], isToggled: false}
+      this.demoNode.push(node)
+      console.log(this.demoNode[i].position.includes("A", 1))
+    }
   }
 
   addNote(note: Note) {
