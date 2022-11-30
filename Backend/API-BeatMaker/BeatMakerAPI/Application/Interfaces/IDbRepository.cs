@@ -1,6 +1,4 @@
-﻿
-
-namespace Application.Interfaces
+﻿namespace Application.Interfaces
 {
     public interface IDbRepository
     {

@@ -6,31 +6,36 @@ namespace Infrastructure
 {
     public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public DbContext(DbContextOptions<DbContext> options, ServiceLifetime service) : base(options)
+        public DbContext(DbContextOptions<DbContext> options_, ServiceLifetime service_) : base(options_)
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder_)
         {
             //User MODEL BUILDER
             //Auto generate ID
-            modelBuilder.Entity<User>()
+            modelBuilder_.Entity<User>()
                 .Property(u => u.Id)
                 .ValueGeneratedOnAdd();
-            modelBuilder.Entity<User>()
+            // Set email property to unique
+            modelBuilder_.Entity<User>()
                 .HasIndex(u => u.Email)
+                .IsUnique();
+            //Set username property to unique
+            modelBuilder_.Entity<User>()
+                .HasIndex(u => u.Username)
                 .IsUnique();
 
             //Beat MODEL BUILDER
             //Auto generate ID
-            modelBuilder.Entity<Beat>()
-                .Property(w => w.Id)
+            modelBuilder_.Entity<Beat>()
+                .Property(b => b.Id)
                 .ValueGeneratedOnAdd();
-            //Add One To Many Relationship
-            modelBuilder.Entity<Beat>()
+            //Add One To Many Relationship & cascade on user delete
+            modelBuilder_.Entity<Beat>()
                 .HasOne<User>()
                 .WithMany()
-                .HasForeignKey(w => w.UserId)
+                .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
             
         }

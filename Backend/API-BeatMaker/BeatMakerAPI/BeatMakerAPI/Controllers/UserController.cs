@@ -33,7 +33,7 @@ namespace BeatMakerAPI.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode(233, e.Message);
+                return StatusCode(422, e.Message);
             }
             catch (Exception e)
             {
@@ -49,24 +49,63 @@ namespace BeatMakerAPI.Controllers
             try
             {
                 var updatedUser = _userService.UpdateUser(userDTO_);
-                return Created("User/Updated ", updatedUser);
+                return Ok(updatedUser);
             }
             catch (ValidationException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode(422, e.ToString());
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.ToString());
             }
         }
-        
+
+        [HttpPut]
+        [Authorize]
+        [Route("updatePassword")]
+        public ActionResult<User> UpdatePassword(UserDTO userDTO_)
+        {
+            try
+            {
+                return Ok(_userService.UpdateUserPassword(userDTO_));
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode(422, e.ToString());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.ToString());
+            }
+        }
+
         [HttpDelete]
         [Authorize]
         [Route("deleteUser")]
-        public void DeleteUser(string email_)
+        public ActionResult DeleteUser(string email_)
         {
-            _userService.DeleteUser(email_);
+            try
+            {
+                _userService.DeleteUser(email_);
+                return Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode(422, e.ToString());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.ToString());
+            }
         }
     }
 }

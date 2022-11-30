@@ -8,7 +8,7 @@ namespace Application.Interfaces
         public List<Beat> GetAllBeatsFromUser(string userEmail_);
         public Beat CreateNewBeat(BeatDTO beatDTO_, string userEmail_);
         public Beat UpdateBeat(BeatDTO beatDTO_, string userEmail_);
-        public void DeleteBeat(string userEmail_);
+        public void DeleteBeat(BeatDTO beatDTO_, string userEmail_);
         public bool IsBeatStringValid(string beatstring_);
     }
 }

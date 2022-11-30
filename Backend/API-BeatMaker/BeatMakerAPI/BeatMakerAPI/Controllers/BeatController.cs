@@ -4,6 +4,7 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
+using Application;
 
 namespace BeatMakerAPI.Controllers
 {
@@ -25,7 +26,15 @@ namespace BeatMakerAPI.Controllers
         [Route("getBeats")]
         public ActionResult<List<Beat>> GetAllBeatsFromUser(string userEmail_)
         {
-            return _beatService.GetAllBeatsFromUser(userEmail_);
+            try
+            {
+                return Ok(_beatService.GetAllBeatsFromUser(userEmail_));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+            
         }
 
         [HttpPost]
@@ -43,7 +52,7 @@ namespace BeatMakerAPI.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode(233, e.Message);
+                return StatusCode(422, e.Message);
             }
             catch (Exception e)
             {
@@ -64,6 +73,10 @@ namespace BeatMakerAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
+            catch (ArgumentException e)
+            {
+                return StatusCode(422, e.Message);
+            }
             catch (Exception e)
             {
                 return StatusCode(500, e.ToString());
@@ -72,9 +85,17 @@ namespace BeatMakerAPI.Controllers
 
         [HttpDelete]
         [Route("deleteBeat")]
-        public void DeleteBeat(string userEmail_)
+        public ActionResult DeleteBeat(BeatDTO beatDTO_, string userEmail_)
         {
-            _beatService.DeleteBeat(userEmail_);
+            try
+            {
+                _beatService.DeleteBeat(beatDTO_, userEmail_);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
     }
 }
