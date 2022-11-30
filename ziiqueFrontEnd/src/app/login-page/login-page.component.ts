@@ -9,7 +9,7 @@ import {HttpService} from "../../services/http.service";
 })
 export class LoginPageComponent implements OnInit {
   password: any;
-  username: any;
+  username_Email: any;
 
 
   constructor(private http: HttpService) { }
@@ -17,14 +17,11 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async Submit() {
+   Submit() {
     let dto = {
-      username: this.username,
+      username_Email: this.username_Email,
       password: this.password
-
     }
-    var token = await this.http.login(dto)
-    // @ts-ignore
-    localStorage.setItem('token', token)
+    this.http.login(dto);
   }
 }

@@ -20,7 +20,7 @@ export const customAxios = axios.create(
   providedIn: 'root'
 })
 export class HttpService {
-  username: any;
+  username_Email: any;
   email: any;
   twoFA: any;
 
@@ -31,15 +31,13 @@ export class HttpService {
 
 async login(dto: any)
 {
-  customAxios.post('auth/login', dto).then(successResult =>{
-    localStorage.setItem('token', successResult.data);
-    let t = jwtDecode(successResult.data)as User;
-    this.username = t.username;
+  const httpResult = await customAxios.post('Login/login', dto);
+    localStorage.setItem('token', httpResult.data);
+    let t = jwtDecode(httpResult.data)as User;
+    this.username_Email = t.username_Email;
     this.email = t.email;
     this.twoFA = t.twoFA;
-    this.router.navigate(['./BeatMaker'])
-  })
-
+    await this.router.navigate(['./BeatMaker'])
 
 }
 

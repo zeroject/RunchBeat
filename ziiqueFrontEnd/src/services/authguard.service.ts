@@ -18,7 +18,7 @@ export class AuthguardService implements CanActivate {
       let currentDate = new Date();
       if (decodedToken.exp) {
         let expire = new Date(decodedToken.exp*1000)
-        if (currentDate>expire)
+        if (currentDate<expire)
         {
           return true;
         }
