@@ -21,8 +21,8 @@
             *ngFor="let note of instruments.notes"
             (click)="addNote(note)"
             [ngClass]="{'green': note.isToggled,'basic': !note.isToggled}">
-
     </button>
+    <button mat-raised-button (click)="play()">start beating!</button>
   </mat-card>
 </div>
 
