@@ -36,7 +36,7 @@ async login(dto: any)
     let t = jwtDecode(httpResult.data)as User;
     this.username_Email = t.username_Email;
     this.email = t.email;
-    this.twoFA = t.twoFA;
+    this.twoFA = t.twoFA.valueOf();
     await this.router.navigate(['./BeatMaker'])
 
 }

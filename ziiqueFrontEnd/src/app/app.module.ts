@@ -17,6 +17,7 @@ import {RouterModule, RouterOutlet, Routes} from "@angular/router";
 import {AuthguardService} from "../services/authguard.service";
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import {MatSnackBarModule} from '@angular/material/snack-bar'
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 const routes: Routes = [
@@ -35,20 +36,21 @@ const routes: Routes = [
     NewUserPageComponent,
     BeatMakerPageComponent
   ],
-  imports: [
-    RouterModule.forRoot(routes),
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatExpansionModule,
-    MatButtonModule,
-    RouterOutlet,
-    MatCardModule,
-    PasswordStrengthMeterModule.forRoot(),
-    MatSnackBarModule
-  ],
+    imports: [
+        RouterModule.forRoot(routes),
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatExpansionModule,
+        MatButtonModule,
+        RouterOutlet,
+        MatCardModule,
+        PasswordStrengthMeterModule.forRoot(),
+        MatSnackBarModule,
+        MatButtonToggleModule
+    ],
   providers: [
 
   ],
