@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Instruments} from "./instruments";
 import {Note} from "./note";
-import {sequence} from "@angular/animations";
+import * as sound from "../../soundEngine";
 
 let names = ["A","B","C","D","E"]
 let NumberOfBars = 16;
@@ -61,11 +61,16 @@ export class BeatMakerPageComponent implements OnInit {
     if (note.isToggled)
     {
       note.isToggled = false;
+       this.sequence = this.sequence.filter(n => n.position !== note.position)
     }
     else{
       note.isToggled = true;
       this.sequence.push(note)
     }
 
+  }
+
+  playDemo(note: Note) {
+    sound.demoNode(note.sound)
   }
 }

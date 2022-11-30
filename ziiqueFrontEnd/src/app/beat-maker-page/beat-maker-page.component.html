@@ -1,5 +1,7 @@
 <h1>beat maker</h1>
-<button (click)="startBeating()"></button>
+<nav>
+  <a class = "mat-raised-button" routerLink="/Profile">for lil gucci C and big Dick daddy</a>
+</nav>
 <div id="beatBoard">
   <mat-card id="intBoard" *ngFor="let instruments of instrumentList; index as i;">
     <button id="demoBton"
@@ -11,7 +13,7 @@
      'dem2': demoNode[i].position.includes('C'),
      'dem3': demoNode[i].position.includes('D'),
      'dem4': demoNode[i].position.includes('E')
-     }">
+     }" (click)="playDemo(demoNode[i])">
       {{demoNode[i].sound}}
     </button>
     <button id="beatBtn"
