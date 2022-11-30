@@ -14,7 +14,7 @@ namespace BeatMakerAPI.Controllers
         }
 
         [HttpPost]
-        [Route("recreateDB/{pass}")]
+        [Route("recreateDB/{pass_}")]
         public ActionResult RecreateDB(string pass_)
         {
             if (pass_ == "DFHIASF93W2qe!Dhif9H8I3I0jhj0fwjh932H9f32wj03rkJ99j023r")
