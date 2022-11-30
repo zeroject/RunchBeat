@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpService} from "../../services/http.service";
+import { HttpService } from "../../services/http.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-profile-page',
@@ -7,14 +8,15 @@ import {HttpService} from "../../services/http.service";
   styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent implements OnInit {
-  email : any;
-  username : any;
-  twofa : any;
+  email: any;
+  username: any;
+  twofa: any;
+
 
   constructor(private http: HttpService) {
     this.username = http.username_Email;
     this.email = http.email;
-    this.twofa = http.twoFA;
+    this.twofa = http.twoFA === 'True';
   }
 
   ngOnInit(): void {

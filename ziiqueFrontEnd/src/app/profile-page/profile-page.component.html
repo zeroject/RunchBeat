@@ -3,13 +3,17 @@
     <br>
     <ng-container>Email : {{email}}</ng-container>
     <br>
-    <mat-slide-toggle></mat-slide-toggle>
-  <mat-form-field>
-    <button mat-raised-button>
-      Delete Account
-    </button>
-    <button mat-raised-button>
-      Update Account
-    </button>
-  </mat-form-field>
+    <mat-slide-toggle [checked]="twofa">TwoFA</mat-slide-toggle>
+    <!--
+    <mat-form-field>
+        <button mat-raised-button>
+            Delete Account
+        </button>
+        <button mat-raised-button>
+            Update Account
+        </button>
+        <br>
+
+    </mat-form-field>
+    -->
 </div>
