@@ -17,6 +17,9 @@ namespace Application.Validators
             //Rules for beatstring
             RuleFor(x => x.BeatString).NotNull();
             RuleFor(x => x.BeatString).NotEmpty();
+
+            //Rules for ID
+            RuleFor(x => x.UserId).NotNull();
         }
     }
 }

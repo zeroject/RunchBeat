@@ -20,10 +20,10 @@ namespace Application
             _appSettings = appSettings_.Value;
         }
 
-        public string Login(UserLoginDTO _userLoginDTO)
+        public string Login(UserLoginDTO userLoginDTO_)
         {
-            User user = _userService.GetUserByEmailOrUsername(_userLoginDTO.Username_Email);
-            if (BCrypt.Net.BCrypt.Verify(_userLoginDTO.Password + user.Salt, user.Password))
+            User user = _userService.GetUserByEmailOrUsername(userLoginDTO_.Username_Email);
+            if (BCrypt.Net.BCrypt.Verify(userLoginDTO_.Password + user.Salt, user.Password))
             {
                 return GenerateToken(user);
             }
