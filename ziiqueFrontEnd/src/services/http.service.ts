@@ -46,5 +46,12 @@ async createUser(Dto: {username: any, password: any, email: any, is2FA: any}){
   {
     return httpResult.status}
   }
+  async deleteUser(email: any){
+    const httpResult = await customAxios.delete("User/deleteUser", email);
+  }
+  async updateUser(username: any, email: any, twoFA: any){
+    const httpResult = await customAxios.put(username, email, twoFA)
+
+  }
 
 }

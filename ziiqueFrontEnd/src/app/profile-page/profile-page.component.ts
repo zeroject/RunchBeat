@@ -22,4 +22,12 @@ export class ProfilePageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  deleteUser(){
+    this.http.deleteUser(this.email);
+  }
+
+  updateUser(){
+
+  }
+
 }
