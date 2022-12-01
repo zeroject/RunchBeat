@@ -53,7 +53,14 @@ namespace Application
             {
                 throw new ValidationException(validation.ToString());
             }
-            return _userRepo.UpdateUser(_mapper.Map<User>(userDTO_));
+
+            User user = GetUserByEmailOrUsername(userDTO_.Email);
+            User fullUser = _userRepo.UpdateUser(_mapper.Map<User>(userDTO_));
+            fullUser.Id = user.Id;
+            fullUser.Password = user.Password;
+            fullUser.Salt = user.Salt;
+
+            return fullUser;
         }
 
         public User UpdateUserPassword(UserDTO userDTO_)
