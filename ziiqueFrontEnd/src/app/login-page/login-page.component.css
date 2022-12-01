@@ -8,7 +8,17 @@ place-items: center;
 
 }
 
-.back-video{
+.logo-img{
+  position: absolute;
+  width: auto;
+  height: auto;
+  max-width: 50%;
+  max-height: 50%;
+  alignment: center;
+  right: 37.5%;
+}
+
+.back-img{
   position: absolute;
   right: 0;
   bottom: 0;
@@ -17,5 +27,25 @@ place-items: center;
   width: auto;
   height: auto;
   z-index: -100;
+  animation: icc 10s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes icc {
+  0%{
+    filter: hue-rotate(0deg);
+  }
+  25%{
+    filter: hue-rotate(20deg);
+  }
+  50%{
+    filter: hue-rotate(0deg);
+  }
+  75%{
+    filter: hue-rotate(-20deg);
+  }
+  100%{
+    filter: hue-rotate(0deg);
+  }
 }
 
