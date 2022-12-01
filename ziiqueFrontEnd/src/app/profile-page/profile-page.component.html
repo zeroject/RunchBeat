@@ -11,7 +11,7 @@
       <input matInput placeholder="{{email}}" [(ngModel)]="email">
     </mat-form-field>
     <br>
-    <mat-slide-toggle [checked]="twofa" (change)="">TwoFA</mat-slide-toggle>
+    <mat-slide-toggle [checked]="twofa" (change)="onChange()">TwoFA</mat-slide-toggle>
     <br>
     <div>
         <button mat-raised-button (click)="deleteUser()">
