@@ -5,18 +5,18 @@
   <img class="logo-img" src="assets/ZiiQue-Logo.png">
 </div>
 <body>
-<mat-card>
-  <mat-form-field>
-  <input matInput placeholder="username" type="text" [(ngModel)]="username">
-    </mat-form-field>
-  <mat-form-field>
-  <input matInput ng placeholder="password" type="password" [(ngModel)]="password">
-  </mat-form-field>
-  <mat-card-actions>
-    <button mat-raised-button (click)="Submit()">Login</button>
-  <nav>
-    <a class = "mat-raised-button" routerLink="/NewUser">Dont have an account?</a>
-  </nav>
-  </mat-card-actions>
-</mat-card>
+    <mat-card>
+        <mat-form-field>
+            <input matInput placeholder="username" type="text" [(ngModel)]="username" (keydown.enter)="Submit()">
+        </mat-form-field>
+        <mat-form-field>
+            <input id="pass" matInput ng placeholder="password" type="password" [(ngModel)]="password" (keydown.enter)="Submit()">
+        </mat-form-field>
+        <mat-card-actions>
+            <button id="loginButton" mat-raised-button (click)="Submit()">Login</button>
+            <nav>
+                <a class="mat-raised-button" routerLink="/NewUser">Dont have an account?</a>
+            </nav>
+        </mat-card-actions>
+    </mat-card>
 </body>
