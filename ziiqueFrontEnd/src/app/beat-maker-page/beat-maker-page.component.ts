@@ -3,6 +3,7 @@ import {Instruments} from "./instruments";
 import {Note} from "./note";
 import * as sound from "../../soundEngine";
 
+
 let names = ["A","B","C","D","E"]
 let NumberOfBars = 16;
 
@@ -20,6 +21,7 @@ export class BeatMakerPageComponent implements OnInit {
   sequenceC: Note[] = [];
   sequenceD: Note[] = [];
   sequenceE: Note[] = [];
+
 
 
   constructor() {
@@ -44,7 +46,7 @@ export class BeatMakerPageComponent implements OnInit {
     for (let i = 0; i < this.instrumentList.length; i++) {
       for (let pos = 1; pos < NumberOfBars + 1; pos++) {
         let node: Note = {
-          position: pos + "" + this.instrumentList[i].nameN,
+          position: pos,
           sound: this.instrumentList[i].nameN,
           isToggled: false
         }
@@ -55,9 +57,8 @@ export class BeatMakerPageComponent implements OnInit {
 
   createDemoIns() {
     for (let i = 0; i < names.length; i++) {
-      let node: Note = {position: 0 + names[i], sound: names[i], isToggled: false}
+      let node: Note = {position: 0, sound: names[i], isToggled: false}
       this.demoNode.push(node)
-      console.log(this.demoNode[i].position.includes("A", 1))
     }
   }
 
@@ -108,18 +109,32 @@ export class BeatMakerPageComponent implements OnInit {
     sound.demoNode(note.sound)
   }
 
-  play() {
+  sortSeq() {
     let allSeq = [this.sequenceA, this.sequenceB, this.sequenceC, this.sequenceD, this.sequenceE];
 
     for (let i = 0; i < allSeq.length; i++) {
-      let sorted = [];
-      sorted = allSeq[i].sort((a, b) => (a.position > b.position ? -1 : 1))
-
-      allSeq[i] =  sorted
-      console.log(sorted);
-    }
-    for (let i = 0; i < this.sequenceA.length; i++) {
-      console.log("unsorted "+ this.sequenceA[i].position)
+      allSeq[i] = allSeq[i].sort((a, b) => (a.position < b.position ? -1 : 1))
     }
   }
+
+
+
+
+  convertNodeToSeqStr() : string[]
+  {
+    let result : string[] = []
+    this.sortSeq()
+    let allSeq = [this.sequenceA, this.sequenceB, this.sequenceC, this.sequenceD, this.sequenceE];
+    for (let i = 0; i < allSeq.length; i++) {
+      for (let j = 0; j < allSeq[i].length; j++) {
+        result.push(allSeq[i][j].position + allSeq[i][j].sound)
+      }
+    }
+    return result;
+    }
+
+  play() {
+
+  }
 }
+

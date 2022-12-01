@@ -1,5 +1,6 @@
 import * as Tone from 'tone'
-import {now} from "tone";
+import {now} from 'tone'
+
 
 const multplayer = new Tone.Players({
   urls: {
@@ -10,6 +11,7 @@ const multplayer = new Tone.Players({
     snare: './assets/samples/Snare__Claps.mp3',
   }
 }).toDestination();
+
 
 
 
@@ -34,7 +36,40 @@ export function demoNode(x)
       multplayer.player('snare').start(now());
       break;
   }
+}
 
+function generateNote(note, bpm)
+{
+  let s =note.charAt(1)
+  switch (s)
+  {
+    case "A":
+      multplayer.player('kick').start(generateTime(bpm, note)).sync();
+      break;
+    case "B":
+      multplayer.player('bass').start(generateTime(bpm, note)).sync();
+      break;
+    case "C":
+      multplayer.player('hihat').start(generateTime(bpm, note)).sync();
+      break;
+    case "D":
+      multplayer.player('ride').start(generateTime(bpm, note)).sync();
+      break;
+    case "E":
+      multplayer.player('snare').start(generateTime(bpm, note)).sync();
+      break;
+  }
+}
 
+function generateTime(bpm, note)
+{
+  let bps;
+  bps = bpm / 60
 
+  let splitNote;
+  splitNote = note.charAt(0)
+  let posNum;
+  posNum = Number(splitNote)
+
+  return (1 / bps) * posNum
 }

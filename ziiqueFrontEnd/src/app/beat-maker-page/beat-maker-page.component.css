@@ -17,6 +17,8 @@
   place-items: center;
   grid-auto-flow: row;
   row-gap: 0px;
+  background-color: #424242;
+  border-radius: 25px;
 }
 
 #intBoard{
@@ -72,4 +74,9 @@
   background-color: #F1820E;
   border-color: coral;
   box-shadow: 0 0 5px salmon;
+}
+
+#playBtn
+{
+  background-color: silver;
 }
