@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import axios from "axios";
 import * as https from "https";
 import jwtDecode from "jwt-decode";
-import { User } from "../User";
+import { User } from "../User"
 import {environment} from "../environments/environment";
 import {Router} from "@angular/router";
 
@@ -50,8 +50,11 @@ async createUser(Dto: {username: any, password: any, email: any, is2FA: any}){
     const httpResult = await customAxios.delete("User/deleteUser", email);
   }
   async updateUser(username: any, email: any, twoFA: any){
-    const httpResult = await customAxios.put(username, email, twoFA)
-
+    let user : User = {email : email, twoFA: twoFA, username_Email: username}
+    const httpResult = await customAxios.put("User/updateUser", user).then()
+    {
+      return httpResult.status;
+    }
   }
 
 }

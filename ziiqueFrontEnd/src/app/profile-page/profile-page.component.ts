@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.css']
+  styleUrls: ['./profile-page.component.css'],
 })
 export class ProfilePageComponent implements OnInit {
   email: any;
@@ -27,7 +27,11 @@ export class ProfilePageComponent implements OnInit {
   }
 
   updateUser(){
+    this.http.updateUser(this.username, this.email, this.twofa);
+  }
 
+  onChange(){
+      this.twofa = !this.twofa;
   }
 
 }

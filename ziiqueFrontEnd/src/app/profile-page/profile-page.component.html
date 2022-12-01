@@ -1,15 +1,23 @@
 <div>
-    <ng-container>Username : {{username}}</ng-container>
+    <mat-form-field>
+      Username
+      <br>
+      <input matInput placeholder="{{username}}" [(ngModel)]="username">
+    </mat-form-field>
     <br>
-    <ng-container>Email : {{email}}</ng-container>
+    <mat-form-field>
+      Email
+      <br>
+      <input matInput placeholder="{{email}}" [(ngModel)]="email">
+    </mat-form-field>
     <br>
-    <mat-slide-toggle [checked]="twofa">TwoFA</mat-slide-toggle>
+    <mat-slide-toggle [checked]="twofa" (change)="">TwoFA</mat-slide-toggle>
     <br>
     <div>
-        <button mat-raised-button>
+        <button mat-raised-button (click)="deleteUser()">
             Delete Account
         </button>
-        <button mat-raised-button>
+        <button mat-raised-button (click)="updateUser()">
             Update Account
         </button>
         <br>
