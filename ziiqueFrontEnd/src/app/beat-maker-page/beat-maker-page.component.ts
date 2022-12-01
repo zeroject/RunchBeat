@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Instruments} from "./instruments";
 import {Note} from "./note";
 import * as sound from "../../soundEngine";
+import {Tone} from "tone/build/esm/core/Tone";
+import {now, Transport} from "tone";
 
 
 let names = ["A","B","C","D","E"]
@@ -21,6 +23,8 @@ export class BeatMakerPageComponent implements OnInit {
   sequenceC: Note[] = [];
   sequenceD: Note[] = [];
   sequenceE: Note[] = [];
+  bpm: number = 120;
+
 
 
 
@@ -31,10 +35,6 @@ export class BeatMakerPageComponent implements OnInit {
   ngOnInit(): void {
     this.createInstruments()
     this.createDemoIns()
-
-  }
-
-  startBeating() {
 
   }
 
@@ -130,11 +130,15 @@ export class BeatMakerPageComponent implements OnInit {
         result.push(allSeq[i][j].position + allSeq[i][j].sound)
       }
     }
+    for (let i = 0; i < result.length; i++) {
+      console.log(result[i])
+    }
     return result;
     }
 
-  play() {
 
+  play() {
+  sound.startBeating(this.convertNodeToSeqStr(), this.bpm)
   }
 }
 

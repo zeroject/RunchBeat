@@ -1,5 +1,6 @@
 import * as Tone from 'tone'
-import {now} from 'tone'
+import {now, Transport} from 'tone'
+import {repeat} from "rxjs";
 
 
 const multplayer = new Tone.Players({
@@ -11,8 +12,6 @@ const multplayer = new Tone.Players({
     snare: './assets/samples/Snare__Claps.mp3',
   }
 }).toDestination();
-
-
 
 
 export function demoNode(x)
@@ -44,7 +43,8 @@ function generateNote(note, bpm)
   switch (s)
   {
     case "A":
-      multplayer.player('kick').start(generateTime(bpm, note)).sync();
+      multplayer.player('kick').start(generateTime(bpm, note)).toDestination();
+      console.log('CheckA')
       break;
     case "B":
       multplayer.player('bass').start(generateTime(bpm, note)).sync();
@@ -72,4 +72,11 @@ function generateTime(bpm, note)
   posNum = Number(splitNote)
 
   return (1 / bps) * posNum
+}
+
+export function startBeating(Seq, bpm){
+  for (let note in Seq) {
+    generateNote(note, bpm)
+    Tone.Transport.start(now())
+  }
 }
