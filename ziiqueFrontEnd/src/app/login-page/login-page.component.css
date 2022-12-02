@@ -1,11 +1,19 @@
-body
-{
-display: grid;
-place-items: center;
-}
 .mat-card
 {
+  position: absolute;
+  width: auto;
+  height: auto;
+  max-width: 50%;
+  max-height: 50%;
+  alignment: center;
+}
+.Password-Field{
+  position: relative;
+  margin-top: 100px;
+}
 
+.UsernameEmail-Field{
+  margin-bottom: 100px;
 }
 
 .logo-img{

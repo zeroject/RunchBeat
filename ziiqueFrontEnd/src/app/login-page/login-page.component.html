@@ -6,10 +6,10 @@
 </div>
 <body>
     <mat-card>
-        <mat-form-field>
+        <mat-form-field class="UsernameEmail-Field">
             <input matInput placeholder="username" type="text" [(ngModel)]="username" (keydown.enter)="Submit()">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="Password-Field">
             <input id="pass" matInput ng placeholder="password" type="password" [(ngModel)]="password" (keydown.enter)="Submit()">
         </mat-form-field>
         <mat-card-actions>
