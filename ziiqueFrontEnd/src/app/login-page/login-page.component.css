@@ -1,29 +1,103 @@
-.mat-card
-{
-  position: absolute;
-  width: auto;
-  height: auto;
-  max-width: 50%;
-  max-height: 50%;
-  alignment: center;
-}
-.Password-Field{
+.form-box{
+  top: 100px;
+  width: 380px;
+  height: 450px;
   position: relative;
-  margin-top: 100px;
+  margin: auto;
+  background: rgba(255,255,255);
+  padding: 5px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.switch-button{
+  top: 0px;
+  width: 220px;
+  margin: 35px auto;
+  position: relative;
+  box-shadow: 0 0 20px 9px #B4D9FB;
+  border-radius: 30px;
+}
+.toogle-btn{
+  padding: 10px 33px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+  position: relative;
 }
 
-.UsernameEmail-Field{
-  margin-bottom: 100px;
+#btn-login{
+  color: white;
+}
+#btn-register{
+  color: black;
+}
+
+#btn{
+  top: 0px;
+  left: 0;
+  position: absolute;
+  width: 110px;
+  height: 100%;
+  background: linear-gradient(to right, #cf03dc, #0191f1);
+  border-radius: 30px;
+  transition: .5s;
+}
+.input-group{
+  top: 80px;
+  position: absolute;
+  width: 280px;
+  transition: .5s;
+}
+.input-field{
+  width: 100%;
+  padding: 10px 0;
+  margin: 5px 0;
+}
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label when clicked*/
+  color: #0191f1 !important;
+}
+
+::ng-deep .mat-form-field-label{
+  /*change color of label*/
+  color: #cf03dc !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #cf03dc !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #0191f1 !important;
+}
+
+.submit-btn{
+  width: 85%;
+  padding: 10px 30px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background: linear-gradient(to right, #cf03dc, #0191f1);
+}
+
+#login{
+  left: 50px;
+}
+#register{
+  left: 450px;
 }
 
 .logo-img{
-  position: absolute;
-  width: auto;
-  height: auto;
-  max-width: 50%;
-  max-height: 50%;
-  alignment: center;
-  right: 37.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 80px;
+  width: 412.5px;
+  height: 162.5px;
+  margin: auto;
+  position: relative;
 }
 
 .back-img{

@@ -20,11 +20,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar'
 
 
 const routes: Routes = [
-  { path: 'profile', component: ProfilePageComponent, canActivate: [AuthguardService]},
-  { path: 'login', component: LoginPageComponent },
-  { path: 'newuser', component: NewUserPageComponent },
-  { path: 'beatmaker', component: BeatMakerPageComponent, canActivate: [AuthguardService]},
-  { path: '**', redirectTo:'login'}
+  { path: 'Profile', component: ProfilePageComponent, canActivate: [AuthguardService]},
+  { path: 'Login', component: LoginPageComponent },
+  { path: 'NewUser', component: NewUserPageComponent },
+  { path: 'BeatMaker', component: BeatMakerPageComponent, canActivate: [AuthguardService]},
+  { path: '**', redirectTo:'Login'}
 ];
 
 @NgModule({

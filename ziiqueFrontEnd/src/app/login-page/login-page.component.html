@@ -1,22 +1,41 @@
 <div>
   <img class="back-img" src="assets/Background.png">
 </div>
+
+<body>
 <div>
   <img class="logo-img" src="assets/ZiiQue-Logo.png">
 </div>
-<body>
-    <mat-card>
-        <mat-form-field class="UsernameEmail-Field">
-            <input matInput placeholder="username" type="text" [(ngModel)]="username" (keydown.enter)="Submit()">
+  <div class="form-box">
+    <div class="switch-button">
+      <div id="btn"></div>
+      <button class="toogle-btn" id="btn-login" (click)="SwitchLogin()">Log In</button>
+      <button class="toogle-btn" id="btn-register" (click)="SwitchRegister()">Register</button>
+    </div>
+    <div id="login" class="input-group">
+      <div>
+        <mat-form-field class="input-field" required>
+          <input matInput ng placeholder="Username or Email" type="text" [(ngModel)]="username">
         </mat-form-field>
-        <mat-form-field class="Password-Field">
-            <input id="pass" matInput ng placeholder="password" type="password" [(ngModel)]="password" (keydown.enter)="Submit()">
+        <mat-form-field class="input-field" required>
+          <input matInput ng placeholder="Password" type="password" [(ngModel)]="password">
         </mat-form-field>
-        <mat-card-actions>
-            <button id="loginButton" mat-raised-button (click)="Submit()">Login</button>
-            <nav>
-                <a class="mat-raised-button" routerLink="/NewUser">Dont have an account?</a>
-            </nav>
-        </mat-card-actions>
-    </mat-card>
+      </div>
+      <button class="submit-btn" mat-raised-button (click)="Submit()">Log In</button>
+    </div>
+    <div id="register" class="input-group">
+      <div>
+        <mat-form-field class="input-field" required>
+          <input matInput ng placeholder="Username" type="text" [(ngModel)]="username">
+        </mat-form-field>
+        <mat-form-field class="input-field" aria-placeholder="Email" required>
+          <input matInput ng placeholder="Email" type="text" [(ngModel)]="password">
+        </mat-form-field>
+        <mat-form-field class="input-field" aria-placeholder="Email" required>
+          <input matInput ng placeholder="Password" type="text" [(ngModel)]="password">
+        </mat-form-field>
+      </div>
+      <button class="submit-btn" mat-raised-button (submit)="Submit()">Register</button>
+    </div>
+  </div>
 </body>
