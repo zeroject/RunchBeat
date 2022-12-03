@@ -3,6 +3,7 @@ import { HttpService } from "../../services/http.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import * as EmailValidator from "email-validator";
 import {Router} from "@angular/router";
+import {empty} from "rxjs";
 
 
 @Component({
@@ -35,23 +36,27 @@ export class LoginPageComponent implements OnInit {
   }
 
   async Submit() {
-    console.log(this.username)
-    console.log(this.password)
+    var loading = document.getElementById("loading-img");
     if (!this.username) {
       this.snackbar.open("Remember to enter either your email or username", "Ok")
-
     }
     else if (!this.password) {
       this.snackbar.open("Remember to enter your password", "Ok")
-    }
-    let dto = {
-      username: this.username,
-      password: this.password
+    } else{
+      let dto = {
+        username: this.username,
+        password: this.password
 
+      }
+      // @ts-ignore
+      loading.style.opacity = "100";
+      var token = await this.http.login(dto).catch(reason =>{
+        // @ts-ignore
+        loading.style.opacity = "0";
+      })
+      // @ts-ignore
+      localStorage.setItem('token', token)
     }
-    var token = await this.http.login(dto)
-    // @ts-ignore
-    localStorage.setItem('token', token)
   }
 
   async createUser() {
