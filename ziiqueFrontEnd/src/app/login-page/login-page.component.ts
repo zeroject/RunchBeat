@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from "../../services/http.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import * as EmailValidator from "email-validator";
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-login-page',
@@ -10,14 +13,22 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class LoginPageComponent implements OnInit {
   password: any;
   username: any;
+  cpassword: any;
+  strengthvalue: any;
+  isEmailTrue: any;
+  email: any;
+  HttpStatus: number;
   x: any;
   y: any;
   z: any;
 
+  strength(event: any) {
+    this.strengthvalue = event
+  }
 
 
-  constructor(private http: HttpService, private snackbar: MatSnackBar) {
-
+  constructor(private http: HttpService, private snackbar: MatSnackBar, private router: Router) {
+    this.HttpStatus = 0
   }
 
   ngOnInit(): void {
@@ -38,11 +49,44 @@ export class LoginPageComponent implements OnInit {
       password: this.password
 
     }
-    console.log(dto)
     var token = await this.http.login(dto)
     // @ts-ignore
     localStorage.setItem('token', token)
   }
+
+  async createUser() {
+    if(this.strengthvalue >= 2){
+      if(this.password == this.cpassword){
+        if(EmailValidator.validate(this.email)){
+          let dto = {
+            username: this.username,
+            email: this.email,
+            password: this.password,
+            is2FA: false
+          }
+          this.HttpStatus = await this.http.createUser(dto)
+          if(this.HttpStatus == 201)
+          {
+            this.snackbar.open("User Created", "Ok")
+          }
+          else {
+            this.snackbar.open("Username or Email is already taken", "Ok")
+          }
+        }
+        else {
+          this.snackbar.open("Your email is not valid", "Ok")
+        }
+      }
+      else {
+        this.snackbar.open("Your passwords dont match", "Ok")
+      }
+    }
+    else {
+      this.snackbar.open("Your passwords is not strong enough", "Ok")
+    }
+
+  }
+
   SwitchLogin(){
     console.log('ijliji')
     var x = document.getElementById("login");

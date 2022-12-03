@@ -26,10 +26,16 @@
   position: relative;
 }
 
+.password-Strength{
+  top: -200px !important;
+  margin: auto;
+}
+
 #btn-login{
   color: white;
 }
 #btn-register{
+  left: 5px;
   color: black;
 }
 

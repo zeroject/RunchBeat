@@ -29,13 +29,15 @@
           <input matInput ng placeholder="Username" type="text" [(ngModel)]="username">
         </mat-form-field>
         <mat-form-field class="input-field" aria-placeholder="Email" required>
-          <input matInput ng placeholder="Email" type="text" [(ngModel)]="password">
+          <input matInput ng placeholder="Email" type="text" [(ngModel)]="email">
         </mat-form-field>
         <mat-form-field class="input-field" aria-placeholder="Email" required>
-          <input matInput ng placeholder="Password" type="text" [(ngModel)]="password">
+          <input matInput ng placeholder="Password" type="password" [(ngModel)]="password">
         </mat-form-field>
+        <password-strength-meter class="password-Strength" [password]="password" (strengthChange)="strength($event)"></password-strength-meter>
+        <br>
       </div>
-      <button class="submit-btn" mat-raised-button (submit)="Submit()">Register</button>
+      <button class="submit-btn" mat-raised-button (submit)="createUser()">Register</button>
     </div>
   </div>
 </body>
