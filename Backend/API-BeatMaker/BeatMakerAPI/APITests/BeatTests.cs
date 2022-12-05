@@ -105,5 +105,32 @@ namespace APITests
             _beatRepo.Verify(x => x.DeleteBeat(It.IsAny<Beat>()), Times.Once);
         }
 
+        // Failure Condition Tests
+
+        [Theory]
+        [InlineData("", "This is the best music", "A04;B04;D04;:19", 1, "smol@boy.com", typeof(ValidationException))]
+        [InlineData(null, "This is the best music", "A04;B04;D04;:19", 1, "smol@boy.com", typeof(ValidationException))]
+        [InlineData("bestmusic", null, "A04;B04;D04;:19", 1, "smol@boy.com", typeof(ValidationException))]
+        [InlineData("bestmusic", "This is the best music", "", 1, "smol@boy.com", typeof(Exception))]
+        [InlineData("bestmusic", "This is the best music", null, 1, "smol@boy.com", typeof(NullReferenceException))]
+        [InlineData("bestmusic", "This is the best music", "A04;B04;D04;:19", -1, "smol@boy.com", typeof(ValidationException))]
+        [InlineData("bestmusic", "This is the best music", "A04;B04;D04;:19", null, "smol@boy.com", typeof(ValidationException))]
+        [InlineData("bestmusic", "This is the best music", "A04;B04;D04;:19", 1, "", typeof(ArgumentException))]
+        [InlineData("bestmusic", "This is the best music", "A04;B04;D04;:19", 1, null, typeof(ArgumentException))]
+        public void TestIfBeatValidationFailed(string title_, string summary_, string beatstring_, int userID_, string userEmail, Type expected_)
+        {
+            //Arrange
+            BeatDTO beatDTO = new BeatDTO() { Title = title_, Summary = summary_, BeatString = beatstring_, UserId = userID_ };
+            //Act & Assert
+            try
+            {
+                _beatService.CreateNewBeat(beatDTO, userEmail);
+            }
+            catch (Exception e)
+            {
+                Assert.Equal(expected_, e.GetType());
+            };
+        }
+
     }
 }
