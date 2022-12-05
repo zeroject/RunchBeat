@@ -1,5 +1,5 @@
 export interface User{
   email: string;
-  username: string;
+  username_Email: string;
   twoFA: boolean;
 }
