@@ -65,6 +65,7 @@ namespace APITests
             User userUpdate = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt", Is2FA=false};
             UserDTO userDTO = new UserDTO() { Email= "test@gmail.com", Password= "password123456", Username="HelloBabt", Is2FA=false};
             _userRepo.Setup(x => x.UpdateUser(It.IsAny<User>())).Returns(user);
+            _userRepo.Setup(x => x.GetUserByEmailOrUsername(userDTO.Email)).Returns(user);
             // Act
             _userService.UpdateUser(userDTO);
             // Assert

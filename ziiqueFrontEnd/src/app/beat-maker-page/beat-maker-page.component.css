@@ -1,0 +1,75 @@
+.green{
+  background-color: #58cd36;
+  border-color: green;
+  box-shadow: 0 0 10px green;
+}
+
+.basic{
+  background-color: lightgray;
+}
+
+.mat-card{
+  border-radius: 0px;
+}
+
+#beatBoard{
+  display: grid;
+  place-items: center;
+  grid-auto-flow: row;
+  row-gap: 0px;
+}
+
+#intBoard{
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 10px;
+  padding: 5px;
+}
+
+#beatBtn{
+  min-height: 40px;
+  min-width: 40px;
+
+}
+
+#demoBton
+{
+  border-radius: 5px;
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.dem0
+{
+  background-color: #ED121F;
+    border-color: mediumvioletred;
+  box-shadow: 0 0 5px mediumvioletred;
+}
+
+.dem1
+{
+  background-color: #0EF1E4;
+  border-color: cornflowerblue;
+  box-shadow: 0 0 10px cornflowerblue;
+}
+
+.dem2
+{
+  background-color: #DFF30C;
+  border-color: lightgoldenrodyellow;
+  box-shadow: 0 0 10px lightgoldenrodyellow;
+}
+
+.dem3
+{
+  background-color: #200CF3;
+  border-color: darkblue;
+  box-shadow: 0 0 5px darkblue;
+}
+
+.dem4
+{
+  background-color: #F1820E;
+  border-color: coral;
+  box-shadow: 0 0 5px salmon;
+}

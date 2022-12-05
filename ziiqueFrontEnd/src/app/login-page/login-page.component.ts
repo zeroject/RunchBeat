@@ -111,7 +111,7 @@ export class LoginPageComponent implements OnInit {
     bt.style.color = "black";
   }
 
-  SwitchRegister(){
+  SwitchRegister() {
     console.log('jhgfdhy')
     var x = document.getElementById("login");
     var y = document.getElementById("register");

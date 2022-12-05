@@ -83,7 +83,7 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Transient))
             {
-                User user = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault() ?? throw new ArgumentException("Failed to create user");
+                User user = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault();
                 if (user != null)
                 {
                     return true;
