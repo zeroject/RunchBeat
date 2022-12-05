@@ -1,5 +1,5 @@
 import * as Tone from 'tone'
-import {now, Transport} from 'tone'
+import {Context, now, Time, Transport} from 'tone'
 import {repeat} from "rxjs";
 
 
@@ -40,10 +40,13 @@ export function demoNode(x)
 function generateNote(note, bpm)
 {
   let s =note.charAt(1)
+
+  generateTime(bpm, note)
+  console.log(note)
   switch (s)
   {
     case "A":
-      multplayer.player('kick').start(generateTime(bpm, note)).toDestination();
+      multplayer.player('kick').start(generateTime(bpm, note)).sync();
       console.log('CheckA')
       break;
     case "B":
@@ -74,9 +77,65 @@ function generateTime(bpm, note)
   return (1 / bps) * posNum
 }
 
-export function startBeating(Seq, bpm){
-  for (let note in Seq) {
-    generateNote(note, bpm)
-    Tone.Transport.start(now())
+export function time(bpm)
+{
+  let totalLength = ((bpm / 60) * 16) / 1000
+  let startTime = Date.now();
+  let elapsed = 0;
+  let run = false;
+
+  function start()
+  {
+    if (!run)
+    {
+      run = true;
+    }
+    else run = false
   }
+
+  while (run)
+  {
+    elapsed = Date.now() - startTime
+  }
+
+  if (elapsed === totalLength)
+  {
+    startTime = Date.now()
+  }
+  return elapsed
 }
+
+let beating = false;
+
+export function startBeating(Seq, bpm){
+  if (!beating)
+  {
+  for (let note in Seq) {
+    generateNote(Seq[note], bpm)
+    console.log("startBeating: " + Seq[note])
+    Tone.Transport.start(Tone.now())
+    console.log(multplayer.state)
+    beating = true;
+  }
+  }
+
+  else {
+    multplayer.stopAll(Tone.now())
+    console.log(multplayer.state)
+  beating = false}
+}
+/*
+new play method()
+start timer.
+max lenght / 16. check if any node needs to play. *1 *2 *3 to check if anything needs to play.
+play from right player with .not
+
+case "B"
+foreach (node : array)
+if (generateTime(notePos, bpm) = timer)
+{
+multplayer.player('bass').start(now())
+}
+
+play apropiate sound .now
+ */

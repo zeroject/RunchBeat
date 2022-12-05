@@ -131,7 +131,7 @@ export class BeatMakerPageComponent implements OnInit {
       }
     }
     for (let i = 0; i < result.length; i++) {
-      console.log(result[i])
+      console.log("convert "+ result[i])
     }
     return result;
     }
