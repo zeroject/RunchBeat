@@ -23,22 +23,6 @@ namespace APITests
             }).CreateMapper();
             _userService = new UserService(_userRepo.Object, mapper, validator);
         }
-        
-        [Fact]
-        public void TestIfUserIsValid()
-        {
-            // Arange
-            UserDTO userDTO = new UserDTO()
-            { Email = "test", Username = "test", Password = "test", Is2FA = true };
-            // Act & Assert
-            try
-            {
-                _userService.CreateNewUser(userDTO); 
-            } catch(Exception e) 
-            {
-                Assert.Equal(typeof(ValidationException), e.GetType());
-            };
-        }
 
         [Theory]
         [InlineData(1, "Casper", "gal12345", "adof@gg.org", true)]
@@ -103,6 +87,35 @@ namespace APITests
             _userService.DeleteUser(email_);
             // Assert
             _userRepo.Verify(r => r.DeleteUser(It.IsAny<string>()), Times.Once);
+        }
+
+
+        // Failure Condition Tests
+
+        [Theory]
+        [InlineData("HejHans", "gg69", "smol@boy.com", false, typeof(ValidationException))]
+        [InlineData("", "gg696969", "smol@boy.com", false, typeof(ValidationException))]
+        [InlineData(null, "gg696969", "smol@boy.com", false, typeof(ValidationException))]
+        [InlineData("HejHans", "", "smol@boy.com", false, typeof(ValidationException))]
+        [InlineData("HejHans", null, "smol@boy.com", false, typeof(ValidationException))]
+        [InlineData("HejHans", "gg696969", "", false, typeof(ValidationException))]
+        [InlineData("HejHans", "gg696969", null, false, typeof(ValidationException))]
+        [InlineData("HejHans", "gg696969", "smol@boy.com", null, typeof(ValidationException))]
+        public void TestIfUserValidationFailed(string username_, string password_, string email_, bool is2FA_, Type expected_)
+        {
+            //Arrange
+            UserDTO userDTO = new UserDTO() { Username = username_, Password = password_, Email = email_, Is2FA = is2FA_ };
+
+            //Act & Assert
+            try
+            {
+                _userService.CreateNewUser(userDTO);
+            }
+            catch (Exception e)
+            {
+                Assert.Equal(expected_, e.GetType());
+            };
+
         }
     }
 }
