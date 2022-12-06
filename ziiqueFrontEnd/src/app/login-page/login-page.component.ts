@@ -44,8 +44,8 @@ export class LoginPageComponent implements OnInit {
       this.snackbar.open("Remember to enter your password", "Ok")
     } else{
       let dto = {
-        username: this.username,
-        password: this.password
+        Username_Email: this.username,
+        Password: this.password
 
       }
       // @ts-ignore
