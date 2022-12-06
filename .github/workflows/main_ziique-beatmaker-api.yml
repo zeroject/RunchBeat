@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'ZiiQue-BeatMaker-API'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7DC69C838DB9476C975B6C1D9A08164D }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8171588F43754FDBBDEC11C0C4CEA9F4 }}
           package: .
