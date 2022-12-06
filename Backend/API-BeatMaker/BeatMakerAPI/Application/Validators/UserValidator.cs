@@ -19,6 +19,9 @@ namespace Application.Validators
             //Rules for Email
             RuleFor(x => x.Email).NotEmpty();
             RuleFor(x => x.Email).NotNull();
+
+            //Rules for Is2FA
+            RuleFor(x => x.Is2FA).NotNull();
         }
     }
 }

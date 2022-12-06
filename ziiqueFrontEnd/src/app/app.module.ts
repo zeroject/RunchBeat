@@ -30,8 +30,8 @@ const routes: Routes = [
   { path: 'Profile', pathMatch: "prefix", component: ProfilePageComponent, canActivate: [AuthguardService] },
   { path: 'Login', pathMatch: "full", component: LoginPageComponent },
   { path: 'NewUser', pathMatch: "prefix", component: NewUserPageComponent },
-  { path: 'BeatMaker', pathMatch: "prefix", component: BeatMakerPageComponent, canActivate: [AuthguardService]},
-  { path: '', redirectTo:'/Login', pathMatch: "full"}
+  { path: 'BeatMaker', pathMatch: "prefix", component: BeatMakerPageComponent},
+  { path: '**', redirectTo:'/BeatMaker', pathMatch: "full"}
 ];
 
 @NgModule({

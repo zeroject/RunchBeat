@@ -28,8 +28,11 @@ namespace Application
 
         public Beat CreateNewBeat(BeatDTO beatDTO_, string userEmail_)
         {
-
-            if (IsBeatStringValid(beatDTO_.BeatString)) {
+            if (userEmail_ == null || userEmail_ == "")
+            {
+                throw new ArgumentException("Email is not valid");
+            }
+            else if (IsBeatStringValid(beatDTO_.BeatString)) {
                 var validation = _validator.Validate(beatDTO_);
                 if (!validation.IsValid)
                 {
