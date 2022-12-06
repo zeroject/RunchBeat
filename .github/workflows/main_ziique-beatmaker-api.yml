@@ -21,7 +21,9 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-
+      - name: navigate
+        run: cd Backend\API-BeatMaker\BeatMakerAPI
+        
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
