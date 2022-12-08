@@ -39,7 +39,7 @@ namespace Application
                     throw new ValidationException(validation.ToString());
                 }
                 Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
-                editedBeat.UserId = 1;
+                _userService.GetUserByEmailOrUsername(userEmail_).Id = editedBeat.UserId;
                 return _beatRepo.CreateNewBeat(editedBeat);
             }
             throw new Exception("Save data corrupted");
