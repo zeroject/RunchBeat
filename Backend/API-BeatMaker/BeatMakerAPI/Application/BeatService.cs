@@ -26,9 +26,9 @@ namespace Application
             return _beatRepo.GetAllBeatsFromUser(_userService.GetUserByEmailOrUsername(userEmail_).Id);
         }
 
-        public Beat CreateNewBeat(BeatDTO beatDTO_, string userEmail_)
+        public Beat CreateNewBeat(BeatDTO beatDTO_)
         {
-            if (userEmail_ == null || userEmail_ == "")
+            if (beatDTO_.userEmail == null || beatDTO_.userEmail == "")
             {
                 throw new ArgumentException("Email is not valid");
             }
@@ -39,13 +39,13 @@ namespace Application
                     throw new ValidationException(validation.ToString());
                 }
                 Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
-                _userService.GetUserByEmailOrUsername(userEmail_).Id = editedBeat.UserId;
+                editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.userEmail).Id;
                 return _beatRepo.CreateNewBeat(editedBeat);
             }
             throw new Exception("Save data corrupted");
         }
 
-        public Beat UpdateBeat(BeatDTO beatDTO_, string userEmail_)
+        public Beat UpdateBeat(BeatDTO beatDTO_)
         {
             if (IsBeatStringValid(beatDTO_.BeatString))
             {
@@ -55,16 +55,16 @@ namespace Application
                     throw new ValidationException(validation.ToString());
                 }
                 Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
-                editedBeat.UserId = _userService.GetUserByEmailOrUsername(userEmail_).Id;
+                editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.userEmail).Id;
                 return _beatRepo.UpdateBeat(editedBeat);
             }
             throw new Exception("Save data corrupted");
         }
 
-        public void DeleteBeat(BeatDTO beatDTO_, string userEmail_)
+        public void DeleteBeat(BeatDTO beatDTO_)
         {
             Beat beat = _mapper.Map<Beat>(beatDTO_);
-            beat.UserId = _userService.GetUserByEmailOrUsername(userEmail_).Id;
+            beat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.userEmail).Id;
             _beatRepo.DeleteBeat(beat);
         }
 

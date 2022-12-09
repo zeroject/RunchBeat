@@ -39,11 +39,11 @@ namespace BeatMakerAPI.Controllers
 
         [HttpPost]
         [Route("createBeat")]
-        public ActionResult<Beat> CreateNewBeat(BeatDTO beatDTO_, string userEmail_)
+        public ActionResult<Beat> CreateNewBeat(BeatDTO beatDTO_)
         {
             try
             {
-                var createdBeat = _beatService.CreateNewBeat(beatDTO_, userEmail_);
+                var createdBeat = _beatService.CreateNewBeat(beatDTO_);
                 return Created("Beat/" + createdBeat.Id, createdBeat);
             }
             catch (ValidationException e)
@@ -62,11 +62,11 @@ namespace BeatMakerAPI.Controllers
 
         [HttpPut]
         [Route("updateBeat")]
-        public ActionResult<Beat> Updatebeat(BeatDTO beatDTO_, string userEmail_)
+        public ActionResult<Beat> Updatebeat(BeatDTO beatDTO_)
         {
             try
             {
-                var updatedBeat = _beatService.UpdateBeat(beatDTO_, userEmail_);
+                var updatedBeat = _beatService.UpdateBeat(beatDTO_);
                 return Created("Beat/Updated ", updatedBeat);
             }
             catch (ValidationException e)
@@ -85,11 +85,11 @@ namespace BeatMakerAPI.Controllers
 
         [HttpDelete]
         [Route("deleteBeat")]
-        public ActionResult DeleteBeat(BeatDTO beatDTO_, string userEmail_)
+        public ActionResult DeleteBeat(BeatDTO beatDTO_)
         {
             try
             {
-                _beatService.DeleteBeat(beatDTO_, userEmail_);
+                _beatService.DeleteBeat(beatDTO_);
                 return Ok();
             }
             catch (Exception e)
