@@ -28,7 +28,7 @@ namespace Application
 
         public Beat CreateNewBeat(BeatDTO beatDTO_)
         {
-            if (beatDTO_.userEmail == null || beatDTO_.userEmail == "")
+            if (beatDTO_.UserEmail == null || beatDTO_.UserEmail == "")
             {
                 throw new ArgumentException("Email is not valid");
             }
@@ -39,7 +39,7 @@ namespace Application
                     throw new ValidationException(validation.ToString());
                 }
                 Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
-                editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.userEmail).Id;
+                editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.UserEmail).Id;
                 return _beatRepo.CreateNewBeat(editedBeat);
             }
             throw new Exception("Save data corrupted");
@@ -55,7 +55,7 @@ namespace Application
                     throw new ValidationException(validation.ToString());
                 }
                 Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
-                editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.userEmail).Id;
+                editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.UserEmail).Id;
                 return _beatRepo.UpdateBeat(editedBeat);
             }
             throw new Exception("Save data corrupted");
@@ -64,7 +64,7 @@ namespace Application
         public void DeleteBeat(BeatDTO beatDTO_)
         {
             Beat beat = _mapper.Map<Beat>(beatDTO_);
-            beat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.userEmail).Id;
+            beat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.UserEmail).Id;
             _beatRepo.DeleteBeat(beat);
         }
 

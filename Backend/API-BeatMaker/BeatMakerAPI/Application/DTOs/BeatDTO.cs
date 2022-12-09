@@ -5,6 +5,6 @@
         public string Title { get; set; }
         public string Summary { get; set; }
         public string BeatString { get; set; }
-        public string userEmail { get; set; }
+        public string UserEmail { get; set; }
     }
 }
