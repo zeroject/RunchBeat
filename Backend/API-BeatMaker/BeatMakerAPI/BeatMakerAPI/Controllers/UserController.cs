@@ -20,12 +20,11 @@ namespace BeatMakerAPI.Controllers
 
         [HttpPost]
         [Route("createUser")]
-        public ActionResult<User> CreateNewUser(UserDTO userDTO_)
+        public ActionResult CreateNewUser(UserDTO userDTO_)
         {
             try
             {
-                var createdUser = _userService.CreateNewUser(userDTO_);
-                return Created("User/" + createdUser.Id, createdUser);
+                _userService.CreateNewUser(userDTO_);
             }
             catch (ValidationException e)
             {
@@ -39,6 +38,7 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
+            return Ok();
         }
 
         [HttpPut]
@@ -48,8 +48,7 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                var updatedUser = _userService.UpdateUser(userDTO_);
-                return Ok(updatedUser);
+                _userService.UpdateUser(userDTO_);
             }
             catch (ValidationException e)
             {
@@ -63,6 +62,7 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
+            return Ok();
         }
 
         [HttpPut]
@@ -72,7 +72,7 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                return Ok(_userService.UpdateUserPassword(userDTO_));
+                _userService.UpdateUserPassword(userDTO_);
             }
             catch (ValidationException e)
             {
@@ -86,6 +86,7 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
+            return Ok();
         }
 
         [HttpDelete]
@@ -96,7 +97,6 @@ namespace BeatMakerAPI.Controllers
             try
             {
                 _userService.DeleteUser(email_);
-                return Ok();
             }
             catch (ArgumentException e)
             {
@@ -106,6 +106,7 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
+            return Ok();
         }
     }
 }

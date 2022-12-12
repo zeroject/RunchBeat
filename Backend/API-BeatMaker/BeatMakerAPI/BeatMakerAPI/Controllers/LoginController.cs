@@ -20,12 +20,13 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                return Ok(_auth.Login(userLoginDTO_));
+                _auth.Login(userLoginDTO_);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
+            return Ok();
         }
     }
 }

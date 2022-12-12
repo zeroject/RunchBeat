@@ -22,12 +22,12 @@ namespace BeatMakerAPI.Controllers
                 try
                 {
                     _dbService.RecreateDb();
-                     return Ok();
                 }
                 catch (Exception e)
                 {
                     return StatusCode(500, e.Message);
                 }
+                return Ok();
             }
             return StatusCode(422, "Wrong password");
         }
