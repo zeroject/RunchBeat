@@ -28,13 +28,12 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                _beatService.GetAllBeatsFromUser(userEmail_);
+                return Ok(_beatService.GetAllBeatsFromUser(userEmail_));
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
-            return Ok();
         }
 
         [HttpPost]
