@@ -23,7 +23,7 @@ namespace BeatMakerAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getBeats")]
+        [Route("getBeats/{userEmail_}")]
         public ActionResult<List<Beat>> GetAllBeatsFromUser(string userEmail_)
         {
             try
