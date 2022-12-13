@@ -28,11 +28,8 @@ namespace Application
 
         public Beat CreateNewBeat(BeatDTO beatDTO_)
         {
-            if (beatDTO_.UserEmail == null || beatDTO_.UserEmail == "")
+            if (IsBeatStringValid(beatDTO_.BeatString))
             {
-                throw new ArgumentException("Email is not valid");
-            }
-            else if (IsBeatStringValid(beatDTO_.BeatString)) {
                 var validation = _validator.Validate(beatDTO_);
                 if (!validation.IsValid)
                 {
@@ -42,7 +39,7 @@ namespace Application
                 editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.UserEmail).Id;
                 return _beatRepo.CreateNewBeat(editedBeat);
             }
-            throw new Exception("Save data corrupted");
+            throw new ArgumentException("Save data corrupted");
         }
 
         public Beat UpdateBeat(BeatDTO beatDTO_)
@@ -58,7 +55,7 @@ namespace Application
                 editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.UserEmail).Id;
                 return _beatRepo.UpdateBeat(editedBeat);
             }
-            throw new Exception("Save data corrupted");
+            throw new ArgumentException("Save data corrupted");
         }
 
         public void DeleteBeat(BeatDTO beatDTO_)
@@ -70,39 +67,29 @@ namespace Application
 
         public bool IsBeatStringValid(string beatString_)
         {
-            char[] alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-            Span<char> alpahbetSpan = new Span<char>(alphabet);
-
-            int cheksumCheck = 0;
-            string beatSequence = beatString_.Replace(";", "");
-            string[] cheksumString = beatSequence.Split(":");
-            string beatString = cheksumString[0];
-
-            if (beatString_.Length == 0) { return false; }
-            for (int i = 0; i < beatString.Length; i++)
+            bool result = false;
+            string[] checkString = beatString_.Split(";");
+            checkString = checkString.Take(checkString.Count() - 1).ToArray();
+            foreach (string checkString2 in checkString)
             {
-                if (!Char.IsDigit(beatString[i]))
+                checkString2.Replace(";", "");
+            }
+            foreach (string checkString3 in checkString)
+            {
+                try
                 {
-                    for (int j = 0; j < alphabet.Length; j++)
-                    {
-                        if (beatString[i] == alphabet[j])
-                        {
-                            cheksumCheck = j+1 + cheksumCheck;
-                            break;
-                        }
-                    }
+                    int numberString = int.Parse(checkString3[0].ToString());
                 }
-                else
+                catch
                 {
-                    cheksumCheck = int.Parse(beatString[i].ToString()) + cheksumCheck;
+                    return false;
+                }
+                if (checkString3.Length <= 3 && checkString3.Length != 1)
+                {
+                    result = true;
                 }
             }
-
-            if (cheksumCheck.Equals(int.Parse(cheksumString[1])))
-            {
-                return true;
-            }
-            return false;
+            return result;
         }
     }
 }
