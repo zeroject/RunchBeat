@@ -26,26 +26,22 @@ namespace Application
             return _beatRepo.GetAllBeatsFromUser(_userService.GetUserByEmailOrUsername(userEmail_).Id);
         }
 
-        public Beat CreateNewBeat(BeatDTO beatDTO_, string userEmail_)
+        public Beat CreateNewBeat(BeatDTO beatDTO_)
         {
-            if (userEmail_ == null || userEmail_ == "")
-            {
-                throw new ArgumentException("Email is not valid");
-            }
-            else if (IsBeatStringValid(beatDTO_.BeatString)) {
+            if (IsBeatStringValid(beatDTO_.BeatString)) {
                 var validation = _validator.Validate(beatDTO_);
                 if (!validation.IsValid)
                 {
                     throw new ValidationException(validation.ToString());
                 }
                 Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
-                editedBeat.UserId = 1;
+                editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.UserEmail).Id;
                 return _beatRepo.CreateNewBeat(editedBeat);
             }
-            throw new Exception("Save data corrupted");
+            throw new ArgumentException("Save data corrupted");
         }
 
-        public Beat UpdateBeat(BeatDTO beatDTO_, string userEmail_)
+        public Beat UpdateBeat(BeatDTO beatDTO_)
         {
             if (IsBeatStringValid(beatDTO_.BeatString))
             {
@@ -55,21 +51,22 @@ namespace Application
                     throw new ValidationException(validation.ToString());
                 }
                 Beat editedBeat = _mapper.Map<Beat>(beatDTO_);
-                editedBeat.UserId = _userService.GetUserByEmailOrUsername(userEmail_).Id;
+                editedBeat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.UserEmail).Id;
                 return _beatRepo.UpdateBeat(editedBeat);
             }
-            throw new Exception("Save data corrupted");
+            throw new ArgumentException("Save data corrupted");
         }
 
-        public void DeleteBeat(BeatDTO beatDTO_, string userEmail_)
+        public void DeleteBeat(BeatDTO beatDTO_)
         {
             Beat beat = _mapper.Map<Beat>(beatDTO_);
-            beat.UserId = _userService.GetUserByEmailOrUsername(userEmail_).Id;
+            beat.UserId = _userService.GetUserByEmailOrUsername(beatDTO_.UserEmail).Id;
             _beatRepo.DeleteBeat(beat);
         }
 
         public bool IsBeatStringValid(string beatString_)
         {
+            if (beatString_ == null) { return false; }
             char[] alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
             Span<char> alpahbetSpan = new Span<char>(alphabet);
 

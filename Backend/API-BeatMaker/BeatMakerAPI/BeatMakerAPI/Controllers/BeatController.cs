@@ -28,23 +28,22 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                return Ok(_beatService.GetAllBeatsFromUser(userEmail_));
+                _beatService.GetAllBeatsFromUser(userEmail_);
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
-            
+            return Ok();
         }
 
         [HttpPost]
         [Route("createBeat")]
-        public ActionResult<Beat> CreateNewBeat(BeatDTO beatDTO_, string userEmail_)
+        public ActionResult<Beat> CreateNewBeat(BeatDTO beatDTO_)
         {
             try
             {
-                var createdBeat = _beatService.CreateNewBeat(beatDTO_, userEmail_);
-                return Created("Beat/" + createdBeat.Id, createdBeat);
+                var createdBeat = _beatService.CreateNewBeat(beatDTO_);
             }
             catch (ValidationException e)
             {
@@ -58,16 +57,16 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
+            return Ok();
         }
 
         [HttpPut]
         [Route("updateBeat")]
-        public ActionResult<Beat> Updatebeat(BeatDTO beatDTO_, string userEmail_)
+        public ActionResult<Beat> Updatebeat(BeatDTO beatDTO_)
         {
             try
             {
-                var updatedBeat = _beatService.UpdateBeat(beatDTO_, userEmail_);
-                return Created("Beat/Updated ", updatedBeat);
+                var updatedBeat = _beatService.UpdateBeat(beatDTO_);
             }
             catch (ValidationException e)
             {
@@ -81,21 +80,22 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
+            return Ok();
         }
 
         [HttpDelete]
         [Route("deleteBeat")]
-        public ActionResult DeleteBeat(BeatDTO beatDTO_, string userEmail_)
+        public ActionResult DeleteBeat(BeatDTO beatDTO_)
         {
             try
             {
-                _beatService.DeleteBeat(beatDTO_, userEmail_);
-                return Ok();
+                _beatService.DeleteBeat(beatDTO_);
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
+            return Ok();
         }
     }
 }
