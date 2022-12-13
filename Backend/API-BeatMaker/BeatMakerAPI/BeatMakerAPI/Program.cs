@@ -21,6 +21,7 @@ builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssembli
 var mapper = new MapperConfiguration(config =>
 {
     config.CreateMap<UserDTO, User>();
+    config.CreateMap<BeatDTO, Beat>();
 }).CreateMapper();
 
 builder.Services.AddSingleton(mapper);
