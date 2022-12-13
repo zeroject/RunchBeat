@@ -44,6 +44,7 @@ namespace BeatMakerAPI.Controllers
             try
             {
                 var createdBeat = _beatService.CreateNewBeat(beatDTO_);
+
             }
             catch (ValidationException e)
             {
