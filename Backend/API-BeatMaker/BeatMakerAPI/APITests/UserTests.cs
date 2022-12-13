@@ -25,13 +25,13 @@ namespace APITests
         }
 
         [Theory]
-        [InlineData(1, "Casper", "gal12345", "adof@gg.org", true)]
-        [InlineData(2, "Anders", "MegetSikkertKodeord", "anders@zomf.org", false)]
-        [InlineData(3, "Magus", "jegelskerbannaner1234", "casp@zomr.org", true)]
-        public void TestIfUserWasCreated(int userId_, string username_, string password_, string email_, bool is2FA_)
+        [InlineData(1, "Casper", "gal12345", "adof@gg.org")]
+        [InlineData(2, "Anders", "MegetSikkertKodeord", "anders@zomf.org")]
+        [InlineData(3, "Magus", "jegelskerbannaner1234", "casp@zomr.org")]
+        public void TestIfUserWasCreated(int userId_, string username_, string password_, string email_)
         {
             // Arrange
-            User user = new User() { Id = userId_, Username = username_, Password = password_, Email = email_, Is2FA = is2FA_};
+            User user = new User() { Id = userId_, Username = username_, Password = password_, Email = email_};
             _userRepo.Setup(x => x.GetUserByEmailOrUsername(username_)).Returns(user);
 
             // Act
@@ -45,9 +45,9 @@ namespace APITests
         public void TestIfUserWasUpdated()
         {
             // Arrange
-            User user = new User() { Id = 0, Email="test@gmail.com", Password="password12345", Username="HelloBabt", Is2FA=false};
-            User userUpdate = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt", Is2FA=false};
-            UserDTO userDTO = new UserDTO() { Email= "test@gmail.com", Password= "password123456", Username="HelloBabt", Is2FA=false};
+            User user = new User() { Id = 0, Email="test@gmail.com", Password="password12345", Username="HelloBabt"};
+            User userUpdate = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt"};
+            UserDTO userDTO = new UserDTO() { Email= "test@gmail.com", Password= "password123456", Username="HelloBabt"};
             _userRepo.Setup(x => x.UpdateUser(It.IsAny<User>())).Returns(user);
             _userRepo.Setup(x => x.GetUserByEmailOrUsername(userDTO.Email)).Returns(user);
             // Act
@@ -60,9 +60,9 @@ namespace APITests
         public void TestIfPasswordWasUpdated()
         {
             // Arrange
-            User user = new User() { Id = 0, Email = "test@gmail.com", Password = "password12345", Username = "HelloBabt", Is2FA = false };
-            User userUpdate = new User() { Id = 0, Email = "test@gmail.com", Password = "password123456", Username = "HelloBabt", Is2FA = false };
-            UserDTO userDTO = new UserDTO() { Email = "test@gmail.com", Password = "password123456", Username = "HelloBabt", Is2FA = false };
+            User user = new User() { Id = 0, Email = "test@gmail.com", Password = "password12345", Username = "HelloBabt" };
+            User userUpdate = new User() { Id = 0, Email = "test@gmail.com", Password = "password123456", Username = "HelloBabt" };
+            UserDTO userDTO = new UserDTO() { Email = "test@gmail.com", Password = "password123456", Username = "HelloBabt" };
             _userRepo.Setup(x => x.UpdateUser(It.IsAny<User>())).Returns(user);
             // Act
             _userService.UpdateUserPassword(userDTO);
@@ -78,8 +78,8 @@ namespace APITests
             // Arrange
             User[] fakeRepo = new User[]
             {
-                new User() { Id = 1, Username = "test", Password = "SecretPass123", Email = "ab@gmail.com", Is2FA = false },
-                new User() { Id = 1, Username = "test2", Password = "Password421", Email = "ba@gmail.com", Is2FA = false }
+                new User() { Id = 1, Username = "test", Password = "SecretPass123", Email = "ab@gmail.com" },
+                new User() { Id = 1, Username = "test2", Password = "Password421", Email = "ba@gmail.com" }
             };
             _userRepo.Setup(x => x.GetUserByEmailOrUsername(email_)).Returns(fakeRepo[1]);
             _userRepo.Setup(x => x.DeleteUser(It.IsAny<string>()));
@@ -93,18 +93,18 @@ namespace APITests
         // Failure Condition Tests
 
         [Theory]
-        [InlineData("HejHans", "gg69", "smol@boy.com", false, typeof(ValidationException))]
-        [InlineData("", "gg696969", "smol@boy.com", false, typeof(ValidationException))]
-        [InlineData(null, "gg696969", "smol@boy.com", false, typeof(ValidationException))]
-        [InlineData("HejHans", "", "smol@boy.com", false, typeof(ValidationException))]
-        [InlineData("HejHans", null, "smol@boy.com", false, typeof(ValidationException))]
-        [InlineData("HejHans", "gg696969", "", false, typeof(ValidationException))]
-        [InlineData("HejHans", "gg696969", null, false, typeof(ValidationException))]
-        [InlineData("HejHans", "gg696969", "smol@boy.com", null, typeof(ValidationException))]
-        public void TestIfUserValidationFailed(string username_, string password_, string email_, bool is2FA_, Type expected_)
+        [InlineData("HejHans", "gg69", "smol@boy.com", typeof(ValidationException))]
+        [InlineData("", "gg696969", "smol@boy.com", typeof(ValidationException))]
+        [InlineData(null, "gg696969", "smol@boy.com", typeof(ValidationException))]
+        [InlineData("HejHans", "", "smol@boy.com", typeof(ValidationException))]
+        [InlineData("HejHans", null, "smol@boy.com", typeof(ValidationException))]
+        [InlineData("HejHans", "gg696969", "", typeof(ValidationException))]
+        [InlineData("HejHans", "gg696969", null, typeof(ValidationException))]
+        [InlineData("HejHans", "gg696969", "smol@boy.com", typeof(ValidationException))]
+        public void TestIfUserValidationFailed(string username_, string password_, string email_, Type expected_)
         {
             //Arrange
-            UserDTO userDTO = new UserDTO() { Username = username_, Password = password_, Email = email_, Is2FA = is2FA_ };
+            UserDTO userDTO = new UserDTO() { Username = username_, Password = password_, Email = email_ };
 
             //Act & Assert
             try

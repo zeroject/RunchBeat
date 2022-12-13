@@ -40,7 +40,6 @@ namespace Application
                 Username = userDTO_.Username,
                 Password = HashString(userDTO_.Password, salt),
                 Salt = salt,
-                Is2FA = false,
                 Id = 0
             };
             return _userRepo.CreateNewUser(user);
