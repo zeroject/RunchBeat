@@ -49,7 +49,7 @@ namespace APITests
         {
             // Arrange
             List<Beat> beats = new List<Beat>();
-            User user = new User() { Id = 1, Username = "gg", Password = "gggggggg", Email = "test@test.gmail", Is2FA = false, Salt = "sdfbius" };
+            User user = new User() { Id = 1, Username = "gg", Password = "gggggggg", Email = "test@test.gmail", Salt = "sdfbius" };
             Beat beat = new Beat() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Test", UserId = 1, Id = 0 };
             BeatDTO beatDTO = new BeatDTO() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Test", UserEmail = "test@test.gmail" };
             _beatRepo.Setup(x => x.CreateNewBeat(It.IsAny<Beat>())).Returns(() =>
