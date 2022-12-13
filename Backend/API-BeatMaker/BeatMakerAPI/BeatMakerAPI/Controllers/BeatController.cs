@@ -43,7 +43,7 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                var createdBeat = _beatService.CreateNewBeat(beatDTO_);
+                return Created("Beat Created", _beatService.CreateNewBeat(beatDTO_));
 
             }
             catch (ValidationException e)
@@ -58,7 +58,6 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
-            return Ok();
         }
 
         [HttpPut]
@@ -67,7 +66,7 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                var updatedBeat = _beatService.UpdateBeat(beatDTO_);
+                _beatService.UpdateBeat(beatDTO_);
             }
             catch (ValidationException e)
             {
