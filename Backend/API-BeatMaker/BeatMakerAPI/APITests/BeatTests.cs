@@ -32,8 +32,8 @@ namespace APITests
         }
 
         [Theory]
-        [InlineData("A03;B04;F07;A13;D32;:37", true)]
-        [InlineData("A12;B04;F07;A32;D32;:22", false)]
+        [InlineData("12A;4B;7F;32A;32D;", true)]
+        [InlineData("A12;4B;7F;32A;32D;", false)]
         [InlineData("", false)]
         public void TestIfBeatstringIsValid(string beatstring_, bool expected_)
         {
@@ -49,9 +49,9 @@ namespace APITests
         {
             // Arrange
             List<Beat> beats = new List<Beat>();
-            User user = new User() { Id = 1, Username = "gg", Password = "gggggggg", Email = "test@test.gmail", Is2FA = false, Salt = "sdfbius" };
-            Beat beat = new Beat() { BeatString = "A04;B04;D04;:19", Summary = "Testing test", Title = "Test", UserId = 1, Id = 0 };
-            BeatDTO beatDTO = new BeatDTO() { BeatString = "A04;B04;D04;:19", Summary = "Testing test", Title = "Test", UserEmail = "test@test.gmail" };
+            User user = new User() { Id = 1, Username = "gg", Password = "gggggggg", Email = "test@test.gmail", Salt = "sdfbius" };
+            Beat beat = new Beat() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Test", UserId = 1, Id = 0 };
+            BeatDTO beatDTO = new BeatDTO() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Test", UserEmail = "test@test.gmail" };
             _beatRepo.Setup(x => x.CreateNewBeat(It.IsAny<Beat>())).Returns(() =>
             {
                 beats.Add(beat);
@@ -75,9 +75,9 @@ namespace APITests
             // Arrange
             List<Beat> beats = new List<Beat>();
             User user = new User() { Id = 1 };
-            Beat beat = new Beat() { BeatString = "A04;B04;D04;:19", Summary = "Testing test", Title = "Test", UserId = 1, Id = 0 };
-            Beat updatedBeat = new Beat() { BeatString = "A14;B04;D04;:19", Summary = "Testing test", Title = "Tesgfggfgfjsdaft", UserId = 1, Id = 0 };
-            BeatDTO beatDTO = new BeatDTO() { BeatString = "A04;B04;D04;:19", Summary = "Testing test", Title = "Test", UserEmail = "test@test.gmail" };
+            Beat beat = new Beat() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Test", UserId = 1, Id = 0 };
+            Beat updatedBeat = new Beat() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Tesgfggfgfjsdaft", UserId = 1, Id = 0 };
+            BeatDTO beatDTO = new BeatDTO() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Test", UserEmail = "test@test.gmail" };
             beats.Add(beat);
             _beatRepo.Setup(x => x.UpdateBeat(It.IsAny<Beat>())).Returns(() => {
                 beats.Remove(beat);
@@ -100,7 +100,7 @@ namespace APITests
         {
             // Arrange
             User user = new User() { Id = 1 };
-            BeatDTO beatDTO = new BeatDTO() { BeatString = "A04;B04;D04;:19", Summary = "Testing test", Title = "Test", UserEmail = "test@test.gmail" };
+            BeatDTO beatDTO = new BeatDTO() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Test", UserEmail = "test@test.gmail" };
             _beatRepo.Setup(x => x.DeleteBeat(It.IsAny<Beat>()));
             _userRepo.Setup(x => x.GetUserByEmailOrUsername(It.IsAny<string>())).Returns(user);
 
@@ -114,13 +114,13 @@ namespace APITests
         // Failure Condition Tests
 
         [Theory]
-        [InlineData("", "This is the best music", "A04;B04;D04;:19", "smol@boy.com", typeof(ValidationException))]
-        [InlineData(null, "This is the best music", "A04;B04;D04;:19", "smol@boy.com", typeof(ValidationException))]
-        [InlineData("bestmusic", null, "A04;B04;D04;:19", "smol@boy.com", typeof(ValidationException))]
+        [InlineData("", "This is the best music", "12A;4B;7F;32A;32D;", "smol@boy.com", typeof(ValidationException))]
+        [InlineData(null, "This is the best music", "12A;4B;7F;32A;32D;", "smol@boy.com", typeof(ValidationException))]
+        [InlineData("bestmusic", null, "12A;4B;7F;32A;32D;", "smol@boy.com", typeof(ValidationException))]
         [InlineData("bestmusic", "This is the best music", "", "smol@boy.com", typeof(ArgumentException))]
-        [InlineData("bestmusic", "This is the best music", null, "smol@boy.com", typeof(ArgumentException))]
-        [InlineData("bestmusic", "This is the best music", "A04;B04;D04;:19", "", typeof(ValidationException))]
-        [InlineData("bestmusic", "This is the best music", "A04;B04;D04;:19", null, typeof(ValidationException))]
+        [InlineData("bestmusic", "This is the best music", null, "smol@boy.com", typeof(NullReferenceException))]
+        [InlineData("bestmusic", "This is the best music", "12A;4B;7F;32A;32D;", "", typeof(ValidationException))]
+        [InlineData("bestmusic", "This is the best music", "12A;4B;7F;32A;32D;", null, typeof(ValidationException))]
         public void TestIfBeatValidationFailed(string title_, string summary_, string beatstring_, string userEmail_, Type expected_)
         {
             //Arrange
