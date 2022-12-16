@@ -65,7 +65,7 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                var updatedBeat = _beatService.UpdateBeat(beatDTO_);
+                return Ok(_beatService.UpdateBeat(beatDTO_));
             }
             catch (ValidationException e)
             {
@@ -79,7 +79,6 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
-            return Ok();
         }
 
         [HttpDelete]
@@ -89,12 +88,12 @@ namespace BeatMakerAPI.Controllers
             try
             {
                 _beatService.DeleteBeat(beatDTO_);
+                return Ok();
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
-            return Ok();
         }
     }
 }
