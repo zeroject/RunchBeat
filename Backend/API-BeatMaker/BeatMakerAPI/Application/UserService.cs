@@ -3,6 +3,7 @@ using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using FluentValidation;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
 
 namespace Application
@@ -69,9 +70,11 @@ namespace Application
             {
                 throw new ValidationException(validation.ToString());
             }
-
+            
             var salt = RandomNumberGenerator.GetBytes(32).ToString();
+            User user = GetUserByEmailOrUsername(userDTO_.Email);
             User updatedUser = _mapper.Map<User>(userDTO_);
+            updatedUser.Id = user.Id;
             updatedUser.Password = HashString(userDTO_.Password, salt);
             updatedUser.Salt = salt;
             return _userRepo.UpdateUser(updatedUser);
