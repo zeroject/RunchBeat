@@ -100,7 +100,9 @@ namespace APITests
         {
             // Arrange
             User user = new User() { Id = 1 };
+
             BeatDTO beatDTO = new BeatDTO() { BeatString = "12A;4B;7F;32A;32D;", Summary = "Testing test", Title = "Test", UserEmail = "test@test.gmail" };
+
             _beatRepo.Setup(x => x.DeleteBeat(It.IsAny<Beat>()));
             _userRepo.Setup(x => x.GetUserByEmailOrUsername(It.IsAny<string>())).Returns(user);
 

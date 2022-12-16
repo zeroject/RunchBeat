@@ -24,7 +24,7 @@ namespace BeatMakerAPI.Controllers
         {
             try
             {
-                _userService.CreateNewUser(userDTO_);
+                return Created("User Created", _userService.CreateNewUser(userDTO_));
             }
             catch (ValidationException e)
             {
@@ -38,7 +38,6 @@ namespace BeatMakerAPI.Controllers
             {
                 return StatusCode(500, e.ToString());
             }
-            return Ok();
         }
 
         [HttpPut]
@@ -91,7 +90,7 @@ namespace BeatMakerAPI.Controllers
 
         [HttpDelete]
         [Authorize]
-        [Route("deleteUser")]
+        [Route("deleteUser/{email_}")]
         public ActionResult DeleteUser(string email_)
         {
             try
