@@ -62,8 +62,7 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                User userToUpdate = context._userEntries.Where(x => x.Email == user_.Email).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User");
-                context._userEntries.Update(userToUpdate);
+                _ = context._userEntries.Update(user_) ?? throw new KeyNotFoundException("Could not find User");
                 context.SaveChanges();
                 return user_;
             }

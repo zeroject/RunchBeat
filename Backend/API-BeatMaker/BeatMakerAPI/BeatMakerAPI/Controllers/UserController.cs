@@ -42,30 +42,6 @@ namespace BeatMakerAPI.Controllers
 
         [HttpPut]
         [Authorize]
-        [Route("updateUser")]
-        public ActionResult<User> UpdateUser(UserDTO userDTO_)
-        {
-            try
-            {
-                _userService.UpdateUser(userDTO_);
-            }
-            catch (ValidationException e)
-            {
-                return BadRequest(e.Message);
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode(422, e.ToString());
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.ToString());
-            }
-            return Ok();
-        }
-
-        [HttpPut]
-        [Authorize]
         [Route("updatePassword")]
         public ActionResult<User> UpdatePassword(UserDTO userDTO_)
         {
