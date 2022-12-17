@@ -24,6 +24,13 @@ namespace APITests
             _userService = new UserService(_userRepo.Object, mapper, validator);
         }
 
+        /// <summary>
+        /// test if a user was created.
+        /// </summary>
+        /// <param name="userId_"></param>
+        /// <param name="username_"></param>
+        /// <param name="password_"></param>
+        /// <param name="email_"></param>
         [Theory]
         [InlineData(1, "Casper", "gal12345", "adof@gg.org")]
         [InlineData(2, "Anders", "MegetSikkertKodeord", "anders@zomf.org")]
@@ -40,12 +47,14 @@ namespace APITests
             // Assert
             Assert.Equal(email_, userTest.Email);
         }
-
+        /// <summary>
+        /// Test if the given user was updated.
+        /// </summary>
         [Fact]
         public void TestIfUserWasUpdated()
         {
             // Arrange
-            User user = new User() { Id = 0, Email="test@gmail.com", Password="password12345", Username="HelloBabt"};
+            User user = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt"};
             User userUpdate = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt"};
             UserDTO userDTO = new UserDTO() { Email= "test@gmail.com", Password= "password123456", Username="HelloBabt"};
             _userRepo.Setup(x => x.UpdateUser(It.IsAny<User>())).Returns(user);
@@ -56,6 +65,9 @@ namespace APITests
             _userRepo.Verify(r => r.UpdateUser(It.IsAny<User>()), Times.Once);
         }
 
+        /// <summary>
+        /// Test if the password was updated on that user.
+        /// </summary>
         [Fact]
         public void TestIfPasswordWasUpdated()
         {
@@ -69,29 +81,31 @@ namespace APITests
             // Assert
             _userRepo.Verify(r => r.UpdateUser(It.IsAny<User>()), Times.Once);
         }
-
-        [Theory]
-        [InlineData("ab@gmail.com")]
-        [InlineData("ba@gmail.com")]
-        public void TestIfUserWasDeleted(string email_)
+        /// <summary>
+        /// Test if the user was deleted.
+        /// </summary>
+        [Fact]
+        public void TestIfUserWasDeleted()
         {
-            // Arrange
-            User[] fakeRepo = new User[]
-            {
-                new User() { Id = 1, Username = "test", Password = "SecretPass123", Email = "ab@gmail.com" },
-                new User() { Id = 1, Username = "test2", Password = "Password421", Email = "ba@gmail.com" }
-            };
-            _userRepo.Setup(x => x.GetUserByEmailOrUsername(email_)).Returns(fakeRepo[1]);
+            User user = new User() { Id = 1, Username = "test", Password = "SecretPass123", Email = "ab@gmail.com" };
+            _userRepo.Setup(x => x.GetUserByEmailOrUsername(user.Email)).Returns(user);
             _userRepo.Setup(x => x.DeleteUser(It.IsAny<string>()));
             // Act
-            _userService.DeleteUser(email_);
+            _userService.DeleteUser(user.Email);
             // Assert
             _userRepo.Verify(r => r.DeleteUser(It.IsAny<string>()), Times.Once);
         }
 
 
-        // Failure Condition Tests
+        /* Failure Condition Tests */
 
+        /// <summary>
+        /// Test if the validator caught something
+        /// </summary>
+        /// <param name="username_"></param>
+        /// <param name="password_"></param>
+        /// <param name="email_"></param>
+        /// <param name="expected_"></param>
         [Theory]
         [InlineData("HejHans", "gg69", "smol@boy.com", typeof(ValidationException))]
         [InlineData("", "gg696969", "smol@boy.com", typeof(ValidationException))]

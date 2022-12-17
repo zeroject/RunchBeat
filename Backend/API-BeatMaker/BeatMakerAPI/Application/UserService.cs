@@ -21,12 +21,21 @@ namespace Application
             _userRepo = repo_;
             _validator = validator_;
         }
-
+        /// <summary>
+        /// Gets the user from a email or username.
+        /// </summary>
+        /// <param name="emailUsername_"></param>
+        /// <returns></returns>
         public User GetUserByEmailOrUsername(string emailUsername_)
         {
             return _userRepo.GetUserByEmailOrUsername(emailUsername_);
         }
-
+        /// <summary>
+        /// creates a new user.
+        /// </summary>
+        /// <param name="userDTO_"></param>
+        /// <returns></returns>
+        /// <exception cref="ValidationException"></exception>
         public User CreateNewUser(UserDTO userDTO_)
         {
             var validation = _validator.Validate(userDTO_);
@@ -45,7 +54,12 @@ namespace Application
             };
             return _userRepo.CreateNewUser(user);
         }
-
+        /// <summary>
+        /// Updates a user with new infomation.
+        /// </summary>
+        /// <param name="userDTO_"></param>
+        /// <returns></returns>
+        /// <exception cref="ValidationException"></exception>
         public User UpdateUser(UserDTO userDTO_)
         {
             var validation = _validator.Validate(userDTO_);
@@ -62,7 +76,12 @@ namespace Application
 
             return fullUser;
         }
-
+        /// <summary>
+        /// updates the users password by encrypting it.
+        /// </summary>
+        /// <param name="userDTO_"></param>
+        /// <returns></returns>
+        /// <exception cref="ValidationException"></exception>
         public User UpdateUserPassword(UserDTO userDTO_)
         {
             var validation = _validator.Validate(userDTO_);
@@ -79,12 +98,20 @@ namespace Application
             updatedUser.Salt = salt;
             return _userRepo.UpdateUser(updatedUser);
         }
-
+        /// <summary>
+        /// deletes a user
+        /// </summary>
+        /// <param name="email_"></param>
         public void DeleteUser(string email_)
         {
             _userRepo.DeleteUser(email_);
         }
-
+        /// <summary>
+        /// Hashes a string and adding salt.
+        /// </summary>
+        /// <param name="hashableString_"></param>
+        /// <param name="salt_"></param>
+        /// <returns></returns>
         private string HashString(string hashableString_, string salt_)
         {
             return BCrypt.Net.BCrypt.HashPassword(hashableString_ + salt_);

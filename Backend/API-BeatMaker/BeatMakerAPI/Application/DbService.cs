@@ -11,6 +11,9 @@ namespace Application
             _dbRepository = dbRepository_;
         }
 
+        /// <summary>
+        /// Deletes the Database if there is one, then creates a new one.
+        /// </summary>
         public void RecreateDb()
         {
             _dbRepository.RecreateDb();
