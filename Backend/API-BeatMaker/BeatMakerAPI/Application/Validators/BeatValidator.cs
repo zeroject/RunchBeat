@@ -9,7 +9,6 @@ namespace Application.Validators
         {
             //Rules for Id
             RuleFor(x => x.Id).NotNull();
-            RuleFor(x => x.Id).NotEmpty();
 
             //Rules for title
             RuleFor(x => x.Title).NotNull();
