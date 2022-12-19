@@ -66,7 +66,7 @@ namespace BeatMakerAPI.Controllers
 
         [HttpDelete]
         [Authorize]
-        [Route("deleteUser")]
+        [Route("deleteUser/{username_}")]
         public ActionResult DeleteUser(string username_)
         {
             try
