@@ -7,6 +7,9 @@ namespace Application.Validators
     {
         public BeatValidator()
         {
+            //Rules for Id
+            RuleFor(x => x.Id).NotNull();
+
             //Rules for title
             RuleFor(x => x.Title).NotNull();
             RuleFor(x => x.Title).NotEmpty();
