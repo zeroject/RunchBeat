@@ -47,23 +47,6 @@ namespace APITests
             // Assert
             Assert.Equal(email_, userTest.Email);
         }
-        /// <summary>
-        /// Test if the given user was updated.
-        /// </summary>
-        [Fact]
-        public void TestIfUserWasUpdated()
-        {
-            // Arrange
-            User user = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt"};
-            User userUpdate = new User() { Id = 0, Email="test@gmail.com", Password="password123456", Username="HelloBabt"};
-            UserDTO userDTO = new UserDTO() { Email= "test@gmail.com", Password= "password123456", Username="HelloBabt"};
-            _userRepo.Setup(x => x.UpdateUser(It.IsAny<User>())).Returns(user);
-            _userRepo.Setup(x => x.GetUserByEmailOrUsername(userDTO.Email)).Returns(user);
-            // Act
-            _userService.UpdateUser(userDTO);
-            // Assert
-            _userRepo.Verify(r => r.UpdateUser(It.IsAny<User>()), Times.Once);
-        }
 
         /// <summary>
         /// Test if the password was updated on that user.
