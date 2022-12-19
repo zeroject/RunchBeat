@@ -12,7 +12,12 @@ namespace Infrastructure
         {
             _options = new DbContextOptionsBuilder<DbContext>().UseSqlite("Data Source = db.db").Options;
         }
-
+        /// <summary>
+        /// Get all the beats from a user.
+        /// </summary>
+        /// <param name="userId_"></param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException"></exception>
         public List<Beat> GetAllBeatsFromUser(int userId_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
@@ -20,7 +25,12 @@ namespace Infrastructure
                 return context._beatEntries.Where(x => x.UserId == userId_).ToList() ?? throw new KeyNotFoundException("Could not find User");
             }
         }
-
+        /// <summary>
+        /// Creates a new beat
+        /// </summary>
+        /// <param name="beat_"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public Beat CreateNewBeat(Beat beat_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Transient))
@@ -30,7 +40,12 @@ namespace Infrastructure
                 return beat_;
             }
         }
-
+        /// <summary>
+        /// Updates the beat with new infomation
+        /// </summary>
+        /// <param name="beat_"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public Beat UpdateBeat(Beat beat_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
@@ -40,7 +55,11 @@ namespace Infrastructure
                 return beat_;
             }
         }
-
+        /// <summary>
+        /// Deletes Beat from the database.
+        /// </summary>
+        /// <param name="beat_"></param>
+        /// <exception cref="KeyNotFoundException"></exception>
         public void DeleteBeat(Beat beat_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))

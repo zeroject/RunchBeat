@@ -30,7 +30,11 @@ namespace APITests
             }).CreateMapper();
             _beatService = new BeatService(_beatRepo.Object, mapper, validator, _userService);
         }
-
+        /// <summary>
+        /// Test if the BeatString is valid.
+        /// </summary>
+        /// <param name="beatstring_"></param>
+        /// <param name="expected_"></param>
         [Theory]
         [InlineData("12A;4B;7F;32A;32D;", true)]
         [InlineData("A12;4B;7F;32A;32D;", false)]
@@ -43,7 +47,9 @@ namespace APITests
             //Assert
             Assert.Equal(expected_, actualValue);
         }
-
+        /// <summary>
+        /// Test if the beat was created.
+        /// </summary>
         [Fact]
         public void TestIfBeatWasCreated()
         {
@@ -68,7 +74,9 @@ namespace APITests
             Assert.Equal(beat, result);
             _beatRepo.Verify(x => x.CreateNewBeat(It.IsAny<Beat>()), Times.Once);
         }
-
+        /// <summary>
+        /// Tests if the given beat has been updated.
+        /// </summary>
         [Fact]
         public void TestIfBeatWasUpdated()
         {
@@ -94,7 +102,9 @@ namespace APITests
             Assert.NotEqual(beat, updatedBeat);
             _beatRepo.Verify(x => x.UpdateBeat(It.IsAny<Beat>()));
         }
-
+        /// <summary>
+        /// Tests if the beat was deleted.
+        /// </summary>
         [Fact]
         public void TestIfBeatWasDeleted()
         {
@@ -113,8 +123,16 @@ namespace APITests
             _beatRepo.Verify(x => x.DeleteBeat(It.IsAny<Beat>()), Times.Once);
         }
 
-        // Failure Condition Tests
+        /* Failure Condition Tests */
 
+        /// <summary>
+        /// Tests if the beat validator caught something
+        /// </summary>
+        /// <param name="title_"></param>
+        /// <param name="summary_"></param>
+        /// <param name="beatstring_"></param>
+        /// <param name="userEmail_"></param>
+        /// <param name="expected_"></param>
         [Theory]
         [InlineData("", "This is the best music", "12A;4B;7F;32A;32D;", "smol@boy.com", typeof(ValidationException))]
         [InlineData(null, "This is the best music", "12A;4B;7F;32A;32D;", "smol@boy.com", typeof(ValidationException))]

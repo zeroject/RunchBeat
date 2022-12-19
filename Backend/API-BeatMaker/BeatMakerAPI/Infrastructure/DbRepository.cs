@@ -11,7 +11,9 @@ namespace Infrastructure
         {
             _options = new DbContextOptionsBuilder<DbContext>().UseSqlite("Data Source = db.db").Options;
         }
-
+        /// <summary>
+        /// Deletes the Database if there is one, then creates a new one.
+        /// </summary>
         public void RecreateDb()
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))

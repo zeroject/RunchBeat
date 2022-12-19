@@ -19,7 +19,14 @@ namespace Application
             _userService = userService_;
             _appSettings = appSettings_.Value;
         }
-
+        /// <summary>
+        /// Checks if the user email/username and password is correct,
+        /// if correct will call method generatetoken that generates a token.
+        /// if not the method will throw a new exception of invalid login.
+        /// </summary>
+        /// <param name="userLoginDTO_"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public string Login(UserLoginDTO userLoginDTO_)
         {
             User user = _userService.GetUserByEmailOrUsername(userLoginDTO_.Username_Email);
@@ -29,7 +36,11 @@ namespace Application
             }
             throw new Exception("INVALID LOGIN");
         }
-        
+        /// <summary>
+        /// Generates a token to be used for verfying a user.
+        /// </summary>
+        /// <param name="user_"></param>
+        /// <returns></returns>
         private string GenerateToken(User user_)
         {
             var key = Encoding.UTF8.GetBytes(_appSettings.Secret);

@@ -12,7 +12,12 @@ namespace Infrastructure
         {
             _options = new DbContextOptionsBuilder<DbContext>().UseSqlite("Data Source = db.db").Options;
         }
-
+        /// <summary>
+        /// Gets the user if the email or username matches in the database.
+        /// </summary>
+        /// <param name="emailUsername_"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public User GetUserByEmailOrUsername(string emailUsername_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
@@ -40,7 +45,12 @@ namespace Infrastructure
 
             }
         }
-
+        /// <summary>
+        /// Creates a new user, also checks if a user with name or email is allready is in use.
+        /// </summary>
+        /// <param name="user_"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public User CreateNewUser(User user_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Transient))
@@ -57,7 +67,12 @@ namespace Infrastructure
                 }
             }
         }
-
+        /// <summary>
+        /// Updates the user with new infomation
+        /// </summary>
+        /// <param name="user_"></param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException"></exception>
         public User UpdateUser(User user_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
@@ -67,7 +82,11 @@ namespace Infrastructure
                 return user_;
             }
         }
-
+        /// <summary>
+        /// Delets the user form database.
+        /// </summary>
+        /// <param name="email_"></param>
+        /// <exception cref="ArgumentException"></exception>
         public void DeleteUser(string email_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
@@ -77,7 +96,11 @@ namespace Infrastructure
                 context.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// checks if the given email is in use by another account.
+        /// </summary>
+        /// <param name="email_"></param>
+        /// <returns></returns>
         private bool CheckIfUserExists(string email_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Transient))
