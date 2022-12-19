@@ -45,7 +45,7 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Transient))
             {
-                if (CheckIfUserExists(user_.Email))
+                if (CheckIfUserExists(user_.Username))
                 {
                     throw new ArgumentException("User Already exists");
                 }
@@ -62,28 +62,28 @@ namespace Infrastructure
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                User userToUpdate = context._userEntries.Where(x => x.Email == user_.Email).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User");
+                User userToUpdate = context._userEntries.Where(x => x.Username == user_.Username).ToList().FirstOrDefault() ?? throw new KeyNotFoundException("Could not find User");
                 context._userEntries.Update(userToUpdate);
                 context.SaveChanges();
                 return user_;
             }
         }
 
-        public void DeleteUser(string email_)
+        public void DeleteUser(string username_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Scoped))
             {
-                User userToDelete = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault() ?? throw new ArgumentException("Failed to delete user");
+                User userToDelete = context._userEntries.Where(x => x.Username == username_).ToList().FirstOrDefault() ?? throw new ArgumentException("Failed to delete user");
                 context._userEntries.Remove(userToDelete);
                 context.SaveChanges();
             }
         }
 
-        private bool CheckIfUserExists(string email_)
+        private bool CheckIfUserExists(string username_)
         {
             using (var context = new DbContext(_options, ServiceLifetime.Transient))
             {
-                User user = context._userEntries.Where(x => x.Email == email_).ToList().FirstOrDefault();
+                User user = context._userEntries.Where(x => x.Username == username_).ToList().FirstOrDefault();
                 if (user != null)
                 {
                     return true;

@@ -62,7 +62,6 @@ namespace APITests
                 return user;
             });
             // Act
-            _userService.GetUserByEmailOrUsername(beatDTO.UserEmail);
             Beat result = _beatService.CreateNewBeat(beatDTO);
             // Assert
             Assert.Equal(beat, result);

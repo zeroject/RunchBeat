@@ -36,30 +36,13 @@ namespace Application
             var salt = RandomNumberGenerator.GetBytes(32).ToString();
             User user = new User()
             {
-                Email = userDTO_.Email,
+                Email = HashString(userDTO_.Email, salt),
                 Username = userDTO_.Username,
                 Password = HashString(userDTO_.Password, salt),
                 Salt = salt,
                 Id = 0
             };
             return _userRepo.CreateNewUser(user);
-        }
-
-        public User UpdateUser(UserDTO userDTO_)
-        {
-            var validation = _validator.Validate(userDTO_);
-            if (!validation.IsValid)
-            {
-                throw new ValidationException(validation.ToString());
-            }
-
-            User user = GetUserByEmailOrUsername(userDTO_.Email);
-            User fullUser = _userRepo.UpdateUser(_mapper.Map<User>(userDTO_));
-            fullUser.Id = user.Id;
-            fullUser.Password = user.Password;
-            fullUser.Salt = user.Salt;
-
-            return fullUser;
         }
 
         public User UpdateUserPassword(UserDTO userDTO_)
@@ -77,9 +60,9 @@ namespace Application
             return _userRepo.UpdateUser(updatedUser);
         }
 
-        public void DeleteUser(string email_)
+        public void DeleteUser(string username_)
         {
-            _userRepo.DeleteUser(email_);
+            _userRepo.DeleteUser(username_);
         }
 
         private string HashString(string hashableString_, string salt_)
